@@ -1,7 +1,7 @@
 'use strict';
 var moment = require("moment");
 var _ = require('lodash');
-var activity = require('../../controllers/folderactivity');
+var activity = require('../../tasks/folderpurge');
 var winston = require('winston');
 
 //********* Main **********//
