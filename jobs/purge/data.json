@@ -1,0 +1,110 @@
+[
+    {
+        "id": "4602db39-755f-4041-ab7d-37db6714e9eb",
+        "name": "Jimi Production - Input",
+        "path": "\\\\192.168.203.201\\Jimi\\Input\\",
+        "extensions": [".xml", ".JPG", ".jpg"],
+        "recursive": true,
+        "limit": {
+        	"value" : 1,
+        	"key": "days"
+        }
+    },
+
+    {
+        "id": "36316beb-16f4-4e21-9283-b220148ebe4d",
+        "name": "DIM Production - Input",
+        "path": "\\\\TOR-FILE-FTP\\root_distribution\\DOR-DIM\\DIM-Input\\Springfield.Production\\",
+        "extensions": [".xml", ".JPG", ".jpg"],
+        "recursive": true,
+        "limit": {
+            "value" : 1,
+            "key": "days"
+        }
+    },
+
+    {
+        "id": "cf7c99a6-df59-4edb-9832-98ab16986a58",
+        "name": "DIM Staging - Output",
+        "path": "\\\\jimi-staging\\DIM\\Output\\JIMI-3.0\\",
+        "extensions": [".xml", ".JPG", ".jpg"],
+        "recursive": true,
+        "limit": {
+            "value" : 5,
+            "key": "days"
+        }
+    },
+
+    {
+        "id": "0dc7298d-06b9-449e-9f6c-b02f216333c8",
+        "name": "DIM Staging - Input",
+        "path": "\\\\TOR-FILE-FTP\\root_distribution\\DOR-DIM\\DIM-Input\\Springfield.Staging\\",
+        "extensions": [".xml", ".JPG", ".jpg", ".txt"],
+        "recursive": true,
+        "limit": {
+            "value" : 2,
+            "key": "days"
+        }
+    },
+
+    {
+        "id": "de6945d8-9dad-49a3-9b88-38e556d6f1be",
+        "name": "Springfield DIM Staging - Input",
+        "path": "\\\\jimi-staging\\DIM\\Output\\JIMI-3.0\\",
+        "extensions": [".xml", ".JPG", ".jpg"],
+        "recursive": true,
+        "limit": {
+            "value" : 5,
+            "key": "days"
+        }
+    },
+
+    {
+        "id": "2e2d1b55-7f64-42d6-9654-45eb585ed372",
+        "name": "DIM Staging - Pubs",
+        "path": "\\\\jimi-staging\\DIM\\Pubs\\",
+        "extensions": [".xml", ".JPG", ".jpg"],
+        "recursive": true,
+        "limit": {
+            "value" : 7,
+            "key": "days"
+        }
+    },
+
+    {
+        "id": "",
+        "name": "Springfield Production - Ottomann",
+        "path": "\\\\TOR-FILE-FTP\\root_distribution\\DOR-DIM\\Input\\Springfield.Production\\",
+        "extensions": [".xml", ".JPG", ".jpg"],
+        "recursive": true,
+        "limit": {
+            "value" : 1,
+            "key": "days"
+        }
+    },
+
+    {
+        "id": "44071a32-d7c5-44c8-985e-c58290e2d25d",
+        "name": "Springfield Staging - Ottomann",
+        "path": "\\\\TOR-FILE-FTP\\root_distribution\\DOR-DIM\\Input\\Springfield.Staging\\",
+        "extensions": [".xml", ".JPG", ".jpg"],
+        "recursive": true,
+        "limit": {
+            "value" : 1,
+            "key": "days"
+        }
+    },
+
+    {
+        "id": "43f6f983-3035-427f-9e2b-d016e7783628",
+        "name": "Springfield Development - Ottomann",
+        "path": "\\\\TOR-FILE-FTP\\root_distribution\\DOR-DIM\\Input\\Springfield.Development\\",
+        "extensions": [".xml", ".JPG", ".jpg"],
+        "recursive": true,
+        "limit": {
+            "value" : 1,
+            "key": "days"
+        }
+    }
+
+]
