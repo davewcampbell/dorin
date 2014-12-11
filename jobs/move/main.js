@@ -15,7 +15,7 @@ if(jobs && jobs.length){
 	_.forEach(jobs, function(job){
 		log(job.name);
 
-		// run the purge activity
+		// run the move activity
 		activity.move(job.source,
 			job.extensions, 
 			job.destination,
@@ -35,7 +35,9 @@ function handleCallback(err, name){
 		winston.log(name + " has completed successfully");
 }
 
+
 function log(message){
 	winston.log(message);
 	winston.info(message);
 }
+
