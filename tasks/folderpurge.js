@@ -78,11 +78,11 @@ function log(message){
 * returns true if the array supplied is null or empty, or if the element is contained in the array. 
 * Otherwise, false is returned
 */
-function isTargetExtension(array, element){
-	if(array == null || array.length == 0)
+function isTargetExtension(extensions, ext){
+	if(extensions == null || extensions.length == 0)
 		return true;
 
-	return _.contains(array, element);
+	return _.contains(extensions, ext);
 }
 
 // Export the purge method

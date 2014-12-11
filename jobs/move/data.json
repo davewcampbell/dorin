@@ -1,0 +1,13 @@
+[
+    {
+        "id": "8602db39-755f-4041-ab7d-37db6714e9eb",
+        "name": "Test Move Locally",
+        "source": "C:\\Temp\\files\\archive\\archive2\\",
+        "destination": "C:\\Temp\\files\\archive\\archive2\\.dorin\\",
+        "extensions": [".xml", ".JPG", ".jpg", ".txt"],
+        "limit": {
+        	"value" : 1,
+        	"key": "year"
+        }
+    }
+]

@@ -4,7 +4,7 @@ var fs = require("fs-extra");
 var _ = require("lodash");
 var moment = require("moment");
 
-function copy(path, destinations){	
+function copy(path, destinations, limit){	
 
 	var copy_callback = function(err, files){
 		_.forEach(files, function(file){
@@ -15,11 +15,8 @@ function copy(path, destinations){
 				var target = destination + file;
 
 				fs.stat(source, function(err, stats){
-					var lmtime = moment(stats.mtime);
-					
-					console.log(lmtime.format("l"));
-
-					if(!err){
+					if(err)	continue;
+					if(!limit || (limit && moment(stats.mtime).isBefore(limit))){
 						fs.copySync(source, target);
 					}
 
