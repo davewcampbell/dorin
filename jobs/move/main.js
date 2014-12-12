@@ -15,11 +15,18 @@ if(jobs && jobs.length){
 	_.forEach(jobs, function(job){
 		log(job.name);
 
+		// use the current job to set the options for this activity
+		var options = {
+			extensions: job.extensions,
+			recursive: job.recursive,
+			preserveDirectoryStructure: job.preserveDirectoryStructure,
+			limit: moment().subtract(job.limit.value, job.limit.key)
+		};
+
 		// run the move activity
 		activity.move(job.source,
-			job.extensions, 
 			job.destination,
-			moment().subtract(job.limit.value, job.limit.key));
+			options);
 	});
 }
 

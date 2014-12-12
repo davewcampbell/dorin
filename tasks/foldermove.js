@@ -6,20 +6,35 @@ var moment = require("moment");
 var winston = require("winston");
 var pathHelper = require('path');
 
-function move(path, extensions, destination, limit){	
+function move(parent, destination, options){	
 
-	log("Received " + path);
+	var extensions = (options)? options.extensions : null;
+	var limit = (options)? options.limit : null;
+	var recursive = (options)? options.recursive : null;
+	var preserveDirectoryStructure = (options)? options.preserveDirectoryStructure : null;
 
-	var move_callback = function(err, files){
+	log("Processing " + parent);
 
-		_.forEach(files, function(file){
+	var move_callback = function(err, paths){
 
-			var source = path + file;			
-			var target = destination + file;
+		_.forEach(paths, function(uri){
+
+			var source = pathHelper.resolve(parent, uri);			
 
 			fs.stat(source, function(err, stats){
 
 				if(err)	return;
+
+				if(stats.isDirectory() && recursive){
+
+					var target = (preserveDirectoryStructure)? pathHelper.resolve(destination,  uri) : destination;
+
+					if(!fs.existsSync(destination)){												
+						fs.mkdirSync(destination);
+					}
+
+					move(source, target, options);
+				}
 
 				if(	stats.isFile() && 
 					isValidLimit(stats.mtime, limit) && 
@@ -30,7 +45,9 @@ function move(path, extensions, destination, limit){
 						fs.mkdirSync(destination);
 					}
 
-					log("Moving to " + target);
+
+					var target = pathHelper.resolve(destination,  uri);
+					log("Moving [" + source + "] to [" + target + "]");
 					fs.renameSync(source, target);
 				}
 			});		
@@ -38,7 +55,7 @@ function move(path, extensions, destination, limit){
 		});
 	};
 
-	fs.readdir(path, move_callback);
+	fs.readdir(parent, move_callback);
 }
 
 /*

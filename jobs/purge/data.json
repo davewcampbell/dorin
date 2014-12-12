@@ -117,6 +117,18 @@
         "limit": {
             "value" : 1,
             "key": "days"
+        }           
+    },
+
+     {
+        "id": "5672f983-3035-427f-9e2b-d016e7783455",
+        "name": "Testing Folder",
+        "path": "C:\\Temp\\files\\purgeable\\",
+        "extensions": [".txt", ".xml"],
+        "recursive": true,
+        "limit": {
+            "value" : 1,
+            "key": "days"
         }
     }
 

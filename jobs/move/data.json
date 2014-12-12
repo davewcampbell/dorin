@@ -2,12 +2,14 @@
     {
         "id": "8602db39-755f-4041-ab7d-37db6714e9eb",
         "name": "Test Move Locally",
-        "source": "C:\\Temp\\files\\archive\\",
-        "destination": "C:\\Temp\\files\\archive\\.dorin\\",
+        "source": "C:\\Temp\\files\\purgeable\\",
+        "destination": "C:\\Temp\\files\\archive2\\",
         "extensions": [".xml", ".JPG", ".jpg", ".txt"],
+        "recursive": true,
+        "preserveDirectoryStructure": true,
         "limit": {
-        	"value" : 1,
-        	"key": "days"
+        	"value" : 3,
+        	"key": "years"
         }
     }
 ]

@@ -1,15 +1,20 @@
 'use strict';
 var moment = require("moment");
 var _ = require('lodash');
-var activity = require('../../tasks/folderpurge');
+
 var winston = require('winston');
+  var logger = new (winston.Logger)({
+    transports: [
+      new (winston.transports.Console)()
+    ]
+  });
 
 //********* Main **********//
 // Data store, should be moved to a database or service file
 var jobs = require('./data');
 
 // we may not want to run all jobs every time.  Define the ones we want here
-var targetIds = ['01a86231-b1c6-417e-8658-e1999465a6ad'];
+var targetIds = ['5672f983-3035-427f-9e2b-d016e7783455'];
 
 // create a new variable that will hold the targed Jobs by Id, or if none supplied, all the jobs in the data file
 var scheduledJobs = (targetIds && targetIds.length) ? _.transform(jobs, function(result, job){
@@ -27,14 +32,20 @@ winston.info("Jobs to run: " + scheduledJobs.length);
 if(scheduledJobs && scheduledJobs.length){
 
 	_.forEach(scheduledJobs, function(job){
-		winston.log(job.name);
+		winston.info(job.name);
 
+		// define a new options variable for our purge activity
+		var options = {
+			extensions: job.extensions,
+			recursive: job.recursive,
+			limit: moment().subtract(job.limit.value, job.limit.key)
+		};
+
+		// create a new purge activity
+		var activity = require('../../tasks/folderpurge');
+		activity.setLogPath(job.path);
 		// run the purge activity
-		activity.purge(job.path, 
-			job.extensions, 
-			job.recursive, 
-			moment().subtract(job.limit.value, job.limit.key), 
-			function(err){handleCallback(err, job.name)});
+		activity.purge(job.path, options, function(err){handleCallback(err, job.name)});
 	});
 }
 
@@ -45,7 +56,7 @@ if(scheduledJobs && scheduledJobs.length){
 */
 function handleCallback(err, name){
 	if(err)
-		winston.log("Error for: " + name + " -- " + err);
+		logger.error("Error for: " + name + " -- " + err);
 	else
-		winston.log(name + " has completed successfully");
+		logger.info(name + " has completed successfully");
 }

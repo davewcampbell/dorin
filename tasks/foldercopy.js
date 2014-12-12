@@ -4,8 +4,10 @@ var fs = require("fs-extra");
 var _ = require("lodash");
 var moment = require("moment");
 
-function copy(path, destinations, limit){	
+function copy(path, destinations, options){	
 
+	var limit = (options != null) ? options.limit : null;
+	
 	var copy_callback = function(err, files){
 		_.forEach(files, function(file){
 
