@@ -4,9 +4,8 @@ var fs = require("fs-extra");
 var _ = require("lodash");
 var pathHelper = require('path');
 var moment = require("moment");
-var logPath = ".";
+var logger = require("../logger");
 
-var logger = createLogger();
 
 /*
 * ****** EXPORTED FUNCTION
@@ -24,9 +23,9 @@ function purge(parent, options, callback){
 	var purge_callback = function(err, paths){
 
 		// error, send result back immediately
-		if(err)  return callback(err);
+		if(err)  return handleError(err, callback);
 		// no files, send control to call back
-		if(!paths.length) return callback(err);
+		if(!paths.length) return callback(null);
 
 		// iterate the objects in the results
 		_.forEach(paths, function(path){
@@ -38,12 +37,12 @@ function purge(parent, options, callback){
 			fs.stat(fullpath, function(err2, stat){
 
 				// if err2 has a value, return
-				if(err2) return callback(err2);
+				if(err2) return handleError(err2, callback);
 
 				// if this is a directory and recursive is truthy, purge it.
 				if(stat.isDirectory() && recursive){
 					purge(fullpath, options, function(err3){
-						if(err) return callback(err3);
+						if(err) return handleError(err3, callback);
 					});
 				}
 				// if it is a file and the extension of the file is our target, then delete the file
@@ -52,7 +51,7 @@ function purge(parent, options, callback){
 					// if there is no limit provided, or the last modified time is before the limit, delete the file.
 					if(!limit || (limit && moment(stat.mtime).isBefore(limit))){
 						deleteFile(fullpath);
-						log(fullpath);
+						logger.log(fullpath);
 					}					
 				}
 			});					
@@ -64,22 +63,9 @@ function purge(parent, options, callback){
 	fs.readdir(parent, purge_callback);
 }
 
-/*
-* ***** EXPORTED FUNCTION
-* Adds a new logger for file using the path as the root to create the custom .dorin folder where the logs reside
-*/
-function setLogPath(path){
-	logPath = path;
-
-	// create the .dorin folder to hold our data in its hidden folder
-	var logpath = pathHelper.resolve(path, ".dorin");
-	// if the folder sturctre doesn't exist, create it
-	if(!fs.existsSync(logpath)){
-		fs.mkdirSync(logpath);
-	}
-
-	// add a new file logger to put the file in the .dorin folder using our filename date convention
-	logger.add(require('winston').transports.File, { filename: logpath + "\\log_" + moment().format('YYYY-MM-DD') + '.log' });
+function handleError(err, callback){
+	logger.error(err);
+	return callback(err);
 }
 
 /*
@@ -87,30 +73,6 @@ function setLogPath(path){
 */
 function deleteFile(path){
 	fs.unlinkSync(path);
-}
-
-/*
-* Logs the messaeg to the console
-*/
-function log(message){
-	logger.info(message);
-	logger.log(message);
-}
-
-/*
-* Creates a logger object and returns it to log at the the path provided
-*/
-function createLogger(){
-	var winston = require('winston');
-
-
-	var logger = new (winston.Logger)({
-		    transports: [
-		      new (winston.transports.Console)()
-		    ]
-		  });
-
-	return logger;	
 }
 
 /*
@@ -127,4 +89,4 @@ function isTargetExtension(extensions, ext){
 
 // Export the purge method
 module.exports.purge = purge;
-module.exports.setLogPath = setLogPath;
+module.exports.setLogPath = function(path){ logger.setLogPath(path);};
