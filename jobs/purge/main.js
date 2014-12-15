@@ -14,7 +14,7 @@ var winston = require('winston');
 var jobs = require('./data');
 
 // we may not want to run all jobs every time.  Define the ones we want here
-var targetIds = ['5672f983-3035-427f-9e2b-d016e7783455'];
+var targetIds = ['4602db39-755f-4041-ab7d-37db6714e9eb'];
 
 // create a new variable that will hold the targed Jobs by Id, or if none supplied, all the jobs in the data file
 var scheduledJobs = (targetIds && targetIds.length) ? _.transform(jobs, function(result, job){

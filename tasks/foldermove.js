@@ -44,7 +44,6 @@ function move(parent, destination, options){
 						fs.mkdirSync(destination);
 					}
 
-
 					var target = pathHelper.resolve(destination,  uri);
 					logger.log("Moving [" + source + "] to [" + target + "]");
 					fs.renameSync(source, target);

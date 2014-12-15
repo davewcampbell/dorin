@@ -7,7 +7,7 @@
         "recursive": true,
         "limit": {
         	"value" : 1,
-        	"key": "days"
+        	"key": "hours"
         }
     },
 
