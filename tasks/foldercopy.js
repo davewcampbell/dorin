@@ -7,7 +7,7 @@ var winston = require("winston");
 var logger = require('../logger');
 var pathHelper = require('path');
 
-function copy(parent, destination, options){	
+function copy(parent, destinations, options){	
 
 	var extensions = (options)? options.extensions : null;
 	var limit = (options)? options.limit : null;
@@ -26,13 +26,13 @@ function copy(parent, destination, options){
 
 				if(stats.isDirectory() && recursive){
 
-					var target = (preserveDirectoryStructure)? pathHelper.resolve(destination,  uri) : destination;
+					// var target = (preserveDirectoryStructure)? pathHelper.resolve(destination,  uri) : destination;
 
-					if(!fs.existsSync(destination)){												
-						fs.mkdirSync(destination);
-					}
+					// if(!fs.existsSync(destination)){												
+					// 	fs.mkdirSync(destination);
+					// }
 
-					copy(source, target, options);
+					copy(source, destinations, options);
 				}
 
 				if(	stats.isFile() && 
@@ -40,21 +40,28 @@ function copy(parent, destination, options){
 					isTargetExtension(extensions, pathHelper.extname(source))
 				){
 
-					if(!fs.existsSync(destination)){
-						fs.mkdirSync(destination);
-					}
+					_.forEach(destinations, function(destination){
+						try{
+							if(!fs.existsSync(destination)){
+								fs.mkdirSync(destination);
+							}
 
-
-					var target = pathHelper.resolve(destination,  uri);
-					logger.log("Moving [" + source + "] to [" + target + "]");
-					fs.copySync(source, target);
+							var target = pathHelper.resolve(destination,  uri);
+							logger.log("Copying [" + source + "] to [" + target + "]");
+							fs.copySync(source, target);
+						}
+						catch(ex){
+							logger.error(ex);
+						}
+					});
+					
 				}
 			});		
 						
 		});
 	};
 
-	fs.readdir(parent, move_callback);
+	fs.readdir(parent, copy_callback);
 }
 
 /*
@@ -77,5 +84,5 @@ function log(message){
 	winston.info(message);
 }
 
-module.exports.move = move;
+module.exports.copy = copy;
 module.exports.setLogPath = function(path){logger.setLogPath(path);};

@@ -3,7 +3,6 @@
 var fs = require("fs-extra");
 var _ = require("lodash");
 var moment = require("moment");
-var winston = require("winston");
 var logger = require('../logger');
 var pathHelper = require('path');
 
@@ -69,11 +68,6 @@ function isTargetExtension(extensions, ext){
 
 function isValidLimit(mtime, limit){
 	return (!limit || (limit && moment(mtime).isAfter(limit)));
-}
-
-function log(message){
-	winston.log(message);
-	winston.info(message);
 }
 
 module.exports.move = move;
