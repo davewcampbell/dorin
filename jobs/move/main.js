@@ -13,6 +13,7 @@ var jobs = require('./data');
 if(jobs && jobs.length){
 
 	_.forEach(jobs, function(job){
+		activity.setLogPath(job.source);
 		log(job.name);
 
 		// use the current job to set the options for this activity

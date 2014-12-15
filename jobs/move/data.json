@@ -2,8 +2,8 @@
     {
         "id": "8602db39-755f-4041-ab7d-37db6714e9eb",
         "name": "Test Move Locally",
-        "source": "C:\\Temp\\files\\purgeable\\",
-        "destination": "C:\\Temp\\files\\archive2\\",
+        "source": "C:\\Temp\\files\\archive2\\",
+        "destination": "C:\\Temp\\files\\purgeable\\",
         "extensions": [".xml", ".JPG", ".jpg", ".txt"],
         "recursive": true,
         "preserveDirectoryStructure": true,

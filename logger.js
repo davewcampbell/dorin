@@ -29,7 +29,6 @@ function warn(message){
 }
 
 /*
-* ***** EXPORTED FUNCTION
 * Adds a new logger for file using the path as the root to create the custom .dorin folder where the logs reside
 */
 function setLogPath(path){

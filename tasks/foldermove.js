@@ -4,6 +4,7 @@ var fs = require("fs-extra");
 var _ = require("lodash");
 var moment = require("moment");
 var winston = require("winston");
+var logger = require('../logger');
 var pathHelper = require('path');
 
 function move(parent, destination, options){	
@@ -12,8 +13,6 @@ function move(parent, destination, options){
 	var limit = (options)? options.limit : null;
 	var recursive = (options)? options.recursive : null;
 	var preserveDirectoryStructure = (options)? options.preserveDirectoryStructure : null;
-
-	log("Processing " + parent);
 
 	var move_callback = function(err, paths){
 
@@ -47,7 +46,7 @@ function move(parent, destination, options){
 
 
 					var target = pathHelper.resolve(destination,  uri);
-					log("Moving [" + source + "] to [" + target + "]");
+					logger.log("Moving [" + source + "] to [" + target + "]");
 					fs.renameSync(source, target);
 				}
 			});		
@@ -79,3 +78,4 @@ function log(message){
 }
 
 module.exports.move = move;
+module.exports.setLogPath = function(path){logger.setLogPath(path);};
