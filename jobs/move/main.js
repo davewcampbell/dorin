@@ -14,7 +14,6 @@ if(jobs && jobs.length){
 
 	_.forEach(jobs, function(job){
 		activity.setLogPath(job.source);
-		log(job.name);
 
 		// use the current job to set the options for this activity
 		var options = {
@@ -27,7 +26,12 @@ if(jobs && jobs.length){
 		// run the move activity
 		activity.move(job.source,
 			job.destination,
-			options);
+			options,
+			function(err){
+				handleCallback(err, job.name);
+			});
+
+		log(job.name);
 	});
 }
 
@@ -37,10 +41,11 @@ if(jobs && jobs.length){
 * Helper function for call backs from the jobs
 */
 function handleCallback(err, name){
+
 	if(err)
-		winston.log("Error for: " + name + " -- " + err);
+		log("Error for: " + name + " -- " + err);
 	else
-		winston.log(name + " has completed successfully");
+		log(name + " has completed successfully");
 }
 
 

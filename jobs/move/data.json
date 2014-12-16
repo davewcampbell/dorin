@@ -4,7 +4,7 @@
         "name": "Test Move Locally",
         "source": "C:\\Temp\\files\\archive2\\",
         "destination": "C:\\Temp\\files\\purgeable\\",
-        "extensions": [".xml", ".JPG", ".jpg", ".txt"],
+        "extensions": [],
         "recursive": true,
         "preserveDirectoryStructure": true,
         "limit": {
