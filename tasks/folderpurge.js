@@ -5,6 +5,7 @@ var _ = require("lodash");
 var pathHelper = require('path');
 var moment = require("moment");
 var logger = require("../logger");
+var async = require("async");
 
 
 /*
@@ -27,8 +28,7 @@ function purge(parent, options, callback){
 		// no files, send control to call back
 		if(!paths.length) return callback(null);
 
-		// iterate the objects in the results
-		_.forEach(paths, function(path){
+		var processPath = function(path, cb){
 
 			// use the path helper to get our actual path
 			var fullpath = pathHelper.resolve(parent, path);
@@ -37,25 +37,35 @@ function purge(parent, options, callback){
 			fs.stat(fullpath, function(err2, stat){
 
 				// if err2 has a value, return
-				if(err2) return handleError(err2, callback);
+				if(err2) return handleError(err2, cb);
 
 				// if this is a directory and recursive is truthy, purge it.
 				if(stat.isDirectory() && recursive){
 					purge(fullpath, options, function(err3){
-						if(err) return handleError(err3, callback);
+						if(err) return handleError(err3, cb);
+						cb(null);
 					});
 				}
 				// if it is a file and the extension of the file is our target, then delete the file
 				else if(stat.isFile() && isTargetExtension(extensions, pathHelper.extname(fullpath))){
 
 					// if there is no limit provided, or the last modified time is before the limit, delete the file.
-					if(!limit || (limit && moment(stat.mtime).isBefore(limit))){
+					if(!limit || (limit && moment(stat.mtime).isBefore(limit))){						
 						deleteFile(fullpath);
-						logger.log(fullpath);
-					}					
+						logger.log("Deleting [" + fullpath + "]");
+					}	
+
+					cb(null);				
 				}
+				else{
+					cb(null);
+				}
+
 			});					
-		});
+		};
+
+		// iterate the objects in the results
+		async.eachLimit(paths, 900, processPath, function(err){callback(err)});
 	};
 
 
