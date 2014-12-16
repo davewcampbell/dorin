@@ -5,6 +5,7 @@ var _ = require("lodash");
 var moment = require("moment");
 var logger = require('../logger');
 var pathHelper = require('path');
+var mkdir = require('mkdirp');
 
 function move(parent, destination, options){	
 
@@ -26,11 +27,6 @@ function move(parent, destination, options){
 				if(stats.isDirectory() && recursive){
 
 					var target = (preserveDirectoryStructure)? pathHelper.resolve(destination,  uri) : destination;
-
-					if(!fs.existsSync(destination)){												
-						fs.mkdirSync(destination);
-					}
-
 					move(source, target, options);
 				}
 
@@ -40,7 +36,7 @@ function move(parent, destination, options){
 				){
 
 					if(!fs.existsSync(destination)){
-						fs.mkdirSync(destination);
+						mkdir.sync(destination);
 					}
 
 					var target = pathHelper.resolve(destination,  uri);
