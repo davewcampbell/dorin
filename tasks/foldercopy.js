@@ -3,9 +3,9 @@
 var fs = require("fs-extra");
 var _ = require("lodash");
 var moment = require("moment");
-var winston = require("winston");
 var logger = require('../logger');
 var pathHelper = require('path');
+var mkdir = require('mkdirp');
 
 function copy(parent, destinations, options){	
 
@@ -26,13 +26,15 @@ function copy(parent, destinations, options){
 
 				if(stats.isDirectory() && recursive){
 
-					// var target = (preserveDirectoryStructure)? pathHelper.resolve(destination,  uri) : destination;
+					// if we are to preserve the diretory structure, we need to update the list of destinations before sending
+					// into the recursive call.  Otherwise, just send the root destination array we got originally.
+					var recusriveDestinations = (preserveDirectoryStructure)? 
+						_.map(destinations, function(dest){ 
+							return pathHelper.resolve(dest, uri);
+						}) 
+						: destinations;
 
-					// if(!fs.existsSync(destination)){												
-					// 	fs.mkdirSync(destination);
-					// }
-
-					copy(source, destinations, options);
+					copy(source, recusriveDestinations, options);
 				}
 
 				if(	stats.isFile() && 
@@ -43,7 +45,7 @@ function copy(parent, destinations, options){
 					_.forEach(destinations, function(destination){
 						try{
 							if(!fs.existsSync(destination)){
-								fs.mkdirSync(destination);
+								mkdir.sync(destination);
 							}
 
 							var target = pathHelper.resolve(destination,  uri);
@@ -79,10 +81,6 @@ function isValidLimit(mtime, limit){
 	return (!limit || (limit && moment(mtime).isAfter(limit)));
 }
 
-function log(message){
-	winston.log(message);
-	winston.info(message);
-}
 
 module.exports.copy = copy;
 module.exports.setLogPath = function(path){logger.setLogPath(path);};
