@@ -55,6 +55,7 @@ function move(parent, destination, options, callback){
 					// move the file
 					fs.move(source, target, cb);
 				}
+				// if it is none of these, callback
 				else{
 					cb(null);
 				}
@@ -64,7 +65,7 @@ function move(parent, destination, options, callback){
 		};
 
 		// iterate over the list of paths, limiting the number of in process tasks.
-		async.eachLimit(paths, 100,  processPath, function(err){callback(err)});
+		async.eachLimit(paths, 100,  processPath, callback);
 	};
 
 	// start the process by reading all paths in the root supplied.
