@@ -1,8 +1,9 @@
 'use strict';
 
 
-var express = require('express')
-var app = express()
+var express = require('express');
+var app = express();
+var filesRoute = require('./routes/files');
 
 var server = app.listen(3000, function () {
 
@@ -13,12 +14,14 @@ var server = app.listen(3000, function () {
 
 });
 
+// Default
 app.get("/", function(req, res){
 	console.log('Received - Get on default route.')
-	res.send("<h1>Hello dorin</h1>");
+	res.status(200).send("<h1>Hello dorin</h1>");
 });
 
-app.post('/savefile', function (req, res) {
-	console.log('Recieved - Post via /savefile');
-  	res.send('Hello World!');
-});
+// get file by id
+app.get('/file/:id?', filesRoute.getById);
+app.post('/file', filesRoute.save);
+
+module.exports = app;
