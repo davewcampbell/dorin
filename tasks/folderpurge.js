@@ -50,9 +50,9 @@ function purge(parent, options, callback){
 				else if(stat.isFile() && isTargetExtension(extensions, pathHelper.extname(fullpath))){
 
 					// if there is no limit provided, or the last modified time is before the limit, delete the file.
-					if(!limit || (limit && moment(stat.mtime).isBefore(limit))){						
+					if(!limit || (limit && moment(stat.mtime).isBefore(limit))){
+						logger.log("Deleting [" + fullpath + "]");						
 						deleteFile(fullpath);
-						logger.log("Deleting [" + fullpath + "]");
 					}	
 
 					cb(null);				
