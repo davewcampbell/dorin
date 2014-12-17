@@ -27,13 +27,27 @@ if(jobs && jobs.length){
 		// run the move activity
 		activity.copy(job.source,
 			job.destinations,
-			options);
+			options,
+			function(err){
+				handleCallback(err, job.name);
+			});
 	});
 }
-
 
 function log(message){
 	winston.log(message);
 	winston.info(message);
+}
+
+
+/*
+* Helper function for call backs from the jobs
+*/
+function handleCallback(err, name){
+
+	if(err)
+		log("Error for: " + name + " -- " + err);
+	else
+		log(name + " has completed successfully");
 }
 

@@ -1,14 +1,14 @@
 [
     {
         "id": "4a98ee44-9a0b-4e68-8331-ba57dd07199c",
-        "name": "Test Move Locally",
-        "source": "C:\\Temp\\",
-        "destinations": ["C:\\Temp2\\"],
-        "extensions": [],
+        "name": "Test Copy Locally",
+        "source": "\\\\TOR-FILE-FTP\\root_distribution\\DOR-DIM\\Assets\\Staging\\",
+        "destinations": ["C:\\Temp4\\"],
+        "extensions": [".XML", ".xml", ".txt", ".TXT", ".zip", ".JPG", ".jpg"],
         "recursive": true,
         "preserveDirectoryStructure": true,
         "limit": {
-        	"value" : 3,
+        	"value" : 13,
         	"key": "years"
         }
     }
