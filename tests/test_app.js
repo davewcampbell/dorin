@@ -4,30 +4,34 @@ var assert = require("assert");
 var app = require("../app");
 
 
-describe("Testing files routes", function(){
+describe("Files routes", function(){
 
 
-	it("should return 200", function(done){
+	it("get root should return 200", function(done){
 		request(app)
 			.get("/")
 			.expect(200, done)
 	});
 
-	it("Should return not found", function(done){
+	it("get file by id should return success", function(done){
 		request(app)
-			.get("/file/1")
-			.expect(/found/i)
-			.end(done);
+			.get('/file/_5ad6a17cb3c54643bc7c4d62d7f2b5cc-1418935565326.txt')
+			.expect(200, done);
 	});
 });
 
-describe("Test posting a file to a URL", function(){
+describe("post a file to a URL", function(){
 
 	var fname = 'C:\\Temp\\files\\Weeklies.zip';
+	var dests = ["http://localhost:3000/file"];
+	var folderpost = require("../tasks/folderpost");
 
-	it("Should return a success", function(done){
+	it("should return a success", function(done){
 		
-		var resp = folderpost.post(fname, dests, options);
-		assert.equal(resp, 201);
+		var resp = folderpost.post(fname, dests, {}, function(err){
+			console.log(err);
+			done();
+		});
+		
 	});
 });
