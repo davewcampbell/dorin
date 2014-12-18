@@ -21,7 +21,10 @@ app.use('/file', multer({
 	dest: './uploads/',
 	rename: function (fieldname, filename) {
     	return filename.replace(/\W+/g, '-').toLowerCase() + "-" + Date.now();
-  }
+	},
+	limits:{
+		fileSize: 100000000 
+	}
 }));
 
 
