@@ -2,7 +2,6 @@ var winston = require('winston');
 var pathHelper = require('path');
 var fs = require('fs');
 var mkdir = require('mkdirp');
-var logger = createLogger();
 var moment = require('moment');
 
 function createLogger(){
@@ -12,20 +11,15 @@ function createLogger(){
 	return logger;	
 }
 
+
+var logger = createLogger();
+
 /*
 * Logs the messaeg to the console
 */
 function log(message){
 	logger.info(message);
 	logger.log(message);
-}
-
-function error(message){
-	logger.error(message);
-}
-
-function warn(message){
-	logger.warn(message);
 }
 
 /*
@@ -40,13 +34,14 @@ function setLogPath(path){
 		mkdir.sync(logpath);
 	}
 
-	var logpath = pathHelper.resolve(logpath,  moment().format('YYYY-MM-DD') + ".log");
+	logpath = pathHelper.resolve(logpath,  moment().format('YYYY-MM-DD') + ".log");
 
 	// add a new file logger to put the file in the .dorin folder using our filename date convention
 	logger.add(require('winston').transports.File, { filename: logpath });
 }
 
 module.exports.log = log;
-module.exports.error = error;
-module.exports.warn = warn;
+module.exports.error = logger.error;
+module.exports.warn = logger.warn;
+module.exports.info = logger.info;
 module.exports.setLogPath = setLogPath;
