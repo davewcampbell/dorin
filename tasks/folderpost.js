@@ -59,8 +59,8 @@ function post(parent, destinations, options, callback) {
 					unirest.post(dest)
 							.stream()
 							.attach('file', fullname) // Attachment
-							.end(function (response) {
-							  logger.log(response.status);
+							.end(function(response){
+								logger.log(response.body);
 							});
 				}
 				catch(err){
