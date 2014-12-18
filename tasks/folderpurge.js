@@ -65,7 +65,7 @@ function purge(parent, options, callback){
 		};
 
 		// iterate the objects in the results
-		async.eachLimit(paths, 900, processPath, function(err){callback(err)});
+		async.eachLimit(paths, 900, processPath, callback);
 	};
 
 
