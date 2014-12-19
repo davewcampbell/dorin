@@ -7,6 +7,26 @@ var _ = require('lodash');
 
 var jobs = require('./data');
 
+var start = new Date();
+/*
+* Helper function for call backs from the jobs
+*/
+function handleCallback(err, name) {
+	if(err){
+		logger.error("Error for: " + name + " -- " + err);
+	}
+
+	else{
+		logger.info(name + " has completed successfully");		
+	}
+
+	var duration = (new Date() - start) * 0.001;
+
+	logger.log("Total Time: " + duration + " seconds");
+
+}
+
+
 _.forEach(jobs, function (job) {
 
 	logger.log(job.name);
@@ -18,16 +38,9 @@ _.forEach(jobs, function (job) {
 	};
 
 
-	task.post(job.source, job.destinations, options, function (err) {handleCallback(err, job.name)})
+	task.post(job.source, job.destinations, options, function (err) {
+		handleCallback(err, job.name);
+	});
 });
 
 
-/*
-* Helper function for call backs from the jobs
-*/
-function handleCallback(err, name) {
-	if(err)
-		logger.error("Error for: " + name + " -- " + err);
-	else
-		logger.info(name + " has completed successfully");
-}
