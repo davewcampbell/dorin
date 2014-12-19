@@ -1,5 +1,10 @@
 'use strict';
 
+var expressOptions = {
+	sizeLimit: function () {
+		return 500 * 1000000;
+	}
+};
 
 var express = require('express');
 var multer = require('multer'); 
@@ -8,35 +13,35 @@ var filesRoute = require('./routes/files');
 var router = express.Router();
 
 // middleware to run for every request, just console logging
-router.use(function(req, res, next) {
+router.use(function(request, response, next) {
 
 	// log each request to the console
-	console.log(req.method, req.url);
+	console.log(request.method, request.url);
 	// continue doing what we were doing and go to the route
 	next();	
 });
 
 // define the uploads directory
-app.use('/file', multer({ 
+app.use('/api/file', multer({ 
 	dest: './uploads/',
 	rename: function (fieldname, filename) {
     	return filename.replace(/\W+/g, '-').toLowerCase() + "-" + Date.now();
 	},
 	limits:{
-		fileSize: 100000000 
+		fileSize: expressOptions.sizeLimit()
 	}
 }));
 
 
 // get file by id
-router.get('/file/:id?', filesRoute.getById);
+router.get('/api/file/:id?', filesRoute.getById);
 // save file with attachment
-router.post('/file', filesRoute.save);
+router.post('/api/file', filesRoute.save);
 
 
 // Default
-router.get("/", function(req, res){
-	res.status(200).send("<h1>Hello dorin</h1>");
+router.get("/", function(request, response){
+	response.status(200).send("<h1>Hello dorin</h1>");
 });
 
 //appy our routes
