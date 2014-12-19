@@ -55,12 +55,11 @@ function post(parent, destinations, options, callback) {
 			async.each(destinations, function(dest, done){
 
 				try{
-					logger.log("posting to " + dest);
 					unirest.post(dest)
 							.stream()
 							.attach('file', fullname) // Attachment
 							.end(function(response){
-								logger.log(response.body);
+								done(null);
 							});
 				}
 				catch(err){
@@ -82,21 +81,18 @@ function post(parent, destinations, options, callback) {
 
 				// if this is a directory and recursive is truthy, purge it.
 				if(stat.isDirectory() && recursive){
-					post(fullpath, options, function (err3) {
+					post(fullpath, destinations, options, function (err3) {
 						if(err){ return handleError(err3, cb);}
 						cb(null);
 					});
 				}
 				// if it is a file and the extension of the file is our target, then delete the file
-				else if(stat.isFile() && isTargetExtension(extensions, pathHelper.extname(fullpath))){
-
-					// if there is no limit provided, or the last modified time is before the limit, delete the file.
-					if(isValidLimit(stat.mtime, limit)){
-						logger.log("posting [" + fullpath + "]");						
-						postFile(fullpath, destinations, cb);
-					}	
-
-					cb(null);				
+				// and if there is no limit provided, or the last modified time is before the limit, post the file.
+				else if(stat.isFile() && isTargetExtension(extensions, pathHelper.extname(fullpath)) && isValidLimit(stat.mtime, limit)){
+					
+					logger.log("posting [" + fullpath + "]");						
+					postFile(fullpath, destinations, cb);
+													
 				}
 				else{
 					cb(null);
@@ -106,7 +102,7 @@ function post(parent, destinations, options, callback) {
 		};
 
 		// iterate the objects in the results
-		async.eachLimit(paths, 900, processPath, callback);
+		async.eachLimit(paths, 100, processPath, callback);
 	};
 
 	// kick off the process by reading the contents of the path supplied
