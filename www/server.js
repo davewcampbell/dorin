@@ -17,7 +17,7 @@ var expressOptions = {
 router.use(function(request, response, next) {
 
 	// log each request to the console
-	console.log(request.method, request.url);
+	console.log(request.method, request.url, " - ", new Date());
 	// continue doing what we were doing and go to the route
 	next();	
 });
