@@ -140,6 +140,7 @@ function crawl(parent, destinations, options, action, callback) {
 					action(fullpath, destinations, cb);
 				}
 				else{
+					logger.warn("ignoring [" + fullpath + "]");
 					cb(null);
 				}
 
