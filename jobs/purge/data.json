@@ -2,12 +2,12 @@
      {
         "id": "5672f983-3035-427f-9e2b-d016e7783455",
         "name": "JIMI Input Folder",
-        "source": "\\\\192.168.203.201\\Jimi\\Input\\",
+        "source": "\\\\TOR-FILE-FTP\\root_distribution\\DOR-DIM\\DIM-Input\\Springfield.Production\\",
         "extensions": [],
         "recursive": true,
         "limit": {
-            "value" : 1,
-            "key": "hours",
+            "value" : 2,
+            "key": "days",
             "compareAs": "before"
         }
     }
