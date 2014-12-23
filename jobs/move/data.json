@@ -9,7 +9,8 @@
         "preserveDirectoryStructure": true,
         "limit": {
         	"value" : 3,
-        	"key": "years"
+        	"key": "years",
+            "compareAs": "after"
         }
     }
 ]

@@ -2,14 +2,30 @@
     {
         "id": "4a98ee44-9a0b-4e68-8331-ba57dd07199c",
         "name": "Test Copy Locally",
-        "source": "\\\\TOR-FILE-FTP\\root_distribution\\DOR-DIM\\Assets\\Staging\\",
+        "source": "C:\\Temp\\files\\",
         "destinations": ["C:\\Temp4\\"],
-        "extensions": [".XML", ".xml", ".txt", ".TXT", ".zip", ".JPG", ".jpg"],
+        "extensions": [],
         "recursive": true,
         "preserveDirectoryStructure": true,
         "limit": {
         	"value" : 13,
-        	"key": "years"
-        }
+        	"key": "years",
+            "compareAs": "after"
+        }     
+    },
+
+    {
+        "id": "5b98ee44-9a0b-4e68-8331-ba57dd07199c",
+        "name": "Test Copy Locally 2",
+        "source": "C:\\Temp\\files\\",
+        "destinations": ["C:\\Temp3\\"],
+        "extensions": [],
+        "recursive": true,
+        "preserveDirectoryStructure": true,
+        "limit": {
+            "value" : 13,
+            "key": "years",
+            "compareAs": "after"
+        }     
     }
 ]
