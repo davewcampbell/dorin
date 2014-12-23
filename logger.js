@@ -25,16 +25,18 @@ function log(message){
 /*
 * Adds a new logger for file using the path as the root to create the custom .dorin folder where the logs reside
 */
-function setLogPath(path){
+function setLogPath(path, fname){
 
 	// create the .dorin folder to hold our data in its hidden folder
-	var logpath = pathHelper.resolve(path, ".dorin/log/");
+	var logpath = pathHelper.join(path, "logs");
 	// if the folder sturctre doesn't exist, create it
 	if(!fs.existsSync(logpath)){
 		mkdir.sync(logpath);
 	}
 
-	logpath = pathHelper.resolve(logpath,  moment().format('YYYY-MM-DD') + ".log");
+	var filename = fname || '';
+	logpath = pathHelper.join(logpath,  filename + "-" + moment().format('YYYY-MM-DD') + ".log");
+	logger.info(logpath);
 
 	// add a new file logger to put the file in the .dorin folder using our filename date convention
 	logger.add(require('winston').transports.File, { filename: logpath });
