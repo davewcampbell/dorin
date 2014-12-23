@@ -1,6 +1,6 @@
 'use strict';
 
-var task = require('../../tasks/folderpost');
+var activity = require('../../tasks/foldercrawler');
 var logger = require('../../logger');
 var moment = require('moment');
 var _ = require('lodash');
@@ -28,7 +28,7 @@ function handleCallback(err, name) {
 
 
 _.forEach(jobs, function (job) {
-
+	activity.setLogPath(__dirname, job.id);
 	logger.log(job.name);
 
 	var options = {
@@ -38,7 +38,7 @@ _.forEach(jobs, function (job) {
 	};
 
 
-	task.post(job.source, job.destinations, options, function (err) {
+	activity.post(job.source, job.destinations, options, function (err) {
 		handleCallback(err, job.name);
 	});
 });
