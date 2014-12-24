@@ -1,7 +1,7 @@
 'use strict';
 var moment = require("moment");
 var _ = require('lodash');
-var activity = require('../../tasks/foldercrawler');
+var task = require('../../tasks/prairiedog');
 var winston = require('winston');
 
 //********* Main **********//
@@ -33,6 +33,7 @@ function handleCallback(err, name){
 if(jobs && jobs.length){
 
 	_.forEach(jobs, function(job){
+		var activity = task();
 		activity.setLogPath(__dirname, job.id);
 
 		// use the current job to set the options for this activity
@@ -41,7 +42,8 @@ if(jobs && jobs.length){
 			recursive: job.recursive,
 			preserveDirectoryStructure: job.preserveDirectoryStructure,
 			limit: moment().subtract(job.limit.value, job.limit.key),
-			compareAs: job.limit.compareAs
+			compareAs: job.limit.compareAs,
+			logIgnored: job.logIgnored
 		};
 
 		// run the move activity

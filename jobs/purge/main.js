@@ -2,8 +2,8 @@
 var moment = require("moment");
 var _ = require('lodash');
 var async = require('async');
-var logger = require('../../logger');
-var activity = require('../../tasks/foldercrawler');
+var logger = require('../../logger')();
+var task = require('../../tasks/prairiedog');
 
 
 function log(message){
@@ -31,23 +31,16 @@ var jobs = require('./data');
 if(jobs && jobs.length){
 
 	_.forEach(jobs, function(job){
+		var activity = task();
 		activity.setLogPath(__dirname, job.id);
-		log(job.name);
 
-		// use the current job to set the options for this activity
-		var options = {
-			extensions: job.extensions,
-			recursive: job.recursive,
-			limit: moment().subtract(job.limit.value, job.limit.key),
-			compareAs: job.limit.compareAs
-		};
-
-		// run the move activity
+		// run the purge activity
 		activity.purge(job.source,
-			options,
+			job.options,
 			function(err){
 				handleCallback(err, job.name);
 			});
+
 	});
 }
 

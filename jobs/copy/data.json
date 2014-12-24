@@ -4,14 +4,17 @@
         "name": "Test Copy Locally",
         "source": "C:\\Temp\\files\\",
         "destinations": ["C:\\Temp4\\"],
-        "extensions": [],
-        "recursive": true,
-        "preserveDirectoryStructure": true,
-        "limit": {
-        	"value" : 13,
-        	"key": "years",
-            "compareAs": "after"
-        }     
+        "options":{
+            "extensions": [],
+            "recursive": true,
+            "preserveDirectoryStructure": true,
+            "limit": {
+                "value" : 13,
+                "key": "years",
+                "compareAs": "after"
+            },
+            "logIgnored": false 
+        }    
     },
 
     {
@@ -19,13 +22,16 @@
         "name": "Test Copy Locally 2",
         "source": "C:\\Temp\\files\\",
         "destinations": ["C:\\Temp3\\"],
-        "extensions": [],
-        "recursive": true,
-        "preserveDirectoryStructure": true,
-        "limit": {
-            "value" : 13,
-            "key": "years",
-            "compareAs": "after"
-        }     
+        "options":{
+            "extensions": [],
+            "recursive": true,
+            "preserveDirectoryStructure": true,
+            "limit": {
+                "value" : 13,
+                "key": "years",
+                "compareAs": "after"
+            },
+            "logIgnored": false        
+        }   
     }
 ]

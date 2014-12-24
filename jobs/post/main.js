@@ -1,7 +1,7 @@
 'use strict';
 
-var activity = require('../../tasks/foldercrawler');
-var logger = require('../../logger');
+var task = require('../../tasks/prairiedog');
+var logger = require('../../logger')();
 var moment = require('moment');
 var _ = require('lodash');
 
@@ -28,13 +28,16 @@ function handleCallback(err, name) {
 
 
 _.forEach(jobs, function (job) {
+	var activity = task();
 	activity.setLogPath(__dirname, job.id);
 	logger.log(job.name);
 
 	var options = {
 		extensions: job.extensions,
 		recursive: job.recursive,
-		limit: moment().subtract(job.limit.value, job.limit.key)
+		limit: moment().subtract(job.limit.value, job.limit.key),
+		compareAs: job.limit.compareAs,
+		logIgnored: job.logIgnored
 	};
 
 

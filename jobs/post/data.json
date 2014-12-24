@@ -4,11 +4,14 @@
         "name": "Test Post Locally",
         "source": "C:\\Temp\\",
         "destinations": ["http://localhost:3000/api/file"],
-        "extensions": [],
-        "recursive": true,
-        "limit": {
-        	"value" : 3,
-        	"key": "years"
+        "options": {
+           "extensions": [],
+            "recursive": true,
+            "limit": {
+                "value" : 3,
+                "key": "years"
+            },
+            "logIgnored": false         
         }
     }
 ]

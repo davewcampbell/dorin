@@ -4,13 +4,16 @@
         "name": "Test Move Locally",
         "source": "C:\\Temp\\files\\archive2\\",
         "destination": "C:\\Temp\\files\\purgeable\\",
-        "extensions": [],
-        "recursive": true,
-        "preserveDirectoryStructure": true,
-        "limit": {
-        	"value" : 3,
-        	"key": "years",
-            "compareAs": "after"
+        "options": {
+            "extensions": [],
+            "recursive": true,
+            "preserveDirectoryStructure": true,
+            "limit": {
+                "value" : 3,
+                "key": "years",
+                "compareAs": "after"
+            },
+            "logIgnored": false        
         }
     }
 ]

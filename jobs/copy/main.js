@@ -1,8 +1,8 @@
 'use strict';
 var moment = require("moment");
 var _ = require('lodash');
-var activity = require('../../tasks/foldercrawler');
-var logger = require("../../logger");
+var task = require('../../tasks/prairiedog');
+var logger = require("../../logger")();
 
 //********* Main **********//
 // Data store, our models
@@ -30,6 +30,7 @@ function handleCallback(err, name){
 if(jobs && jobs.length){
 
 	_.forEach(jobs, function(job){
+		var activity = task();
 		activity.setLogPath(__dirname, job.id);
 		log(job.name);
 
@@ -39,7 +40,8 @@ if(jobs && jobs.length){
 			recursive: job.recursive,
 			preserveDirectoryStructure: job.preserveDirectoryStructure,
 			limit: moment().subtract(job.limit.value, job.limit.key),
-			compareAs: job.limit.compareAs
+			compareAs: job.limit.compareAs,
+			logIgnored: job.logIgnored
 		};
 
 		// run the move activity
