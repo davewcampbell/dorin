@@ -1,5 +1,5 @@
 node_modules
 www/uploads
 *.log
-www/lib
+www/lib/vendor
 www/public
