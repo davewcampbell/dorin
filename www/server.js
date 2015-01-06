@@ -5,6 +5,7 @@ var multer = require('multer');
 var app = express();
 var filesRoute = require('./routes/files');
 var router = express.Router();
+var path = require("path");
 
 
 var expressOptions = {
@@ -12,6 +13,13 @@ var expressOptions = {
 		return 500 * 1000000;
 	}
 };
+
+// expose the static files in lib
+app.use(express.static(path.join(__dirname, 'public')));
+
+// define our views folder and set the engine
+app.set('views', path.join( __dirname, '/views') ); // critical to use path.join on windows
+app.set('view engine', 'vash');
 
 // middleware to run for every request, just console logging
 router.use(function(request, response, next) {
@@ -34,6 +42,8 @@ app.use('/api/file', multer({
 }));
 
 
+/*******  Routes *******/
+
 // get file by id
 router.get('/api/file/:id?', filesRoute.getById);
 // save file with attachment
@@ -42,9 +52,10 @@ router.post('/api/file', filesRoute.save);
 
 // Default
 router.get("/", function(request, response){
-	response.status(200).send("<h1>Hello dorin</h1>");
+	response.render('index');
 });
 
+/*******  Start App *******/
 //appy our routes
 app.use('/', router);
 
@@ -55,7 +66,6 @@ var server = app.listen(3000, function () {
   var port = server.address().port;
 
   console.log('Example app listening at http://%s:%s', host, port);
-
 });
 
 module.exports = app;
