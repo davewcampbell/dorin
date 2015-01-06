@@ -29,15 +29,15 @@ function main(){
 	*/
 	function setLogPath(path, fname){
 
+		var filename = fname || '';
 		// create the .dorin folder to hold our data in its hidden folder
-		var logpath = pathHelper.join(path, "logs");
+		var logpath = pathHelper.join(path, "logs", filename);
 		// if the folder sturctre doesn't exist, create it
 		if(!fs.existsSync(logpath)){
 			mkdir.sync(logpath);
 		}
 
-		var filename = fname || '';
-		logpath = pathHelper.join(logpath,  filename + "-" + moment().format('YYYY-MM-DD') + ".log");
+		logpath = pathHelper.join(logpath, moment().format('YYYY-MM-DD') + ".log");
 		logger.info(logpath);
 
 		// add a new file logger to put the file in the .dorin folder using our filename date convention
