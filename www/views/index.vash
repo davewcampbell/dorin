@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="dorin">
+	<head>
+		<link href="/lib/style/vendor.css" rel="stylesheet" />
+	</head>
+	<body>
+		
+
+		<div class="container">
+			<div class="row">
+				<div class="jumbotron" ng-controller="purgeController as purgeCtrl">
+					{{purgeCtrl.title}}
+				</div>
+			</div>
+		</div>
+
+		<!-- Vendor JS -->
+		<script type="text/javascript" src="/lib/script/vendor.js"></script>
+
+		<!-- App JS -->
+		<script type="text/javascript" src="/lib/script/app.js"></script>
+
+	</body>
+</html>
