@@ -25,6 +25,7 @@ gulp.task('delete', function() {
 /************************************************************************/
 // concat our vendor scripts
 var vendorScripts = [config.vendorroot + 'angular/angular.min.js', 
+					config.vendorroot + 'angular-route/angular-route.min.js', 
 					config.vendorroot + 'jquery/dist/jquery.min.js', 
 					config.vendorroot + 'bootstrap/dist/js/bootstrap.min.js'];
 
