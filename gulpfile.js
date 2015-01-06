@@ -13,10 +13,11 @@ var config = {
 
 /************************************************************************/
 // Run the delete to clean up old files first
-var deleteFolders = [config.publiclib + 'fonts/*',
-					config.publiclib + '*', 
+var deleteFolders = [config.publiclib + '*', 
 					config.publiclib + 'style/*', 					
-					config.publiclib + 'script/*'];
+					config.publiclib + 'script/*',
+					config.publiclib + 'fonts/*',
+					config.publiclib + 'views/*'];
 
 gulp.task('delete', function() {
   del.sync(deleteFolders);
@@ -50,13 +51,25 @@ gulp.task('vendorstyles', function(){
 
 /************************************************************************/
 // concat our app scripts
-var appScripts = [config.approot + 'mainmodule.js'];
+var appScripts = [config.approot + 'mainmodule.js',
+					config.approot + 'purge/controllers/*.js',
+					config.approot + 'purge/services/*.js',
+					config.approot + 'purge/directives/*.js'];
 
 gulp.task('appscripts', function(){
 	return gulp
 		.src(appScripts)
     	.pipe(concat({ path: 'script/app.js'}))
 		.pipe(gulp.dest(config.publiclib));
+});
+
+/************************************************************************/
+// copy our angular view files
+var ngViewFiles = [config.approot + 'purge/views/**.*'];
+
+gulp.task('views', function(){
+	return gulp.src(ngViewFiles)
+        .pipe(gulp.dest(config.publiclib + 'views/purge'));
 });
 
 /************************************************************************/
@@ -71,7 +84,9 @@ gulp.task('fonts', function(){
 
 /************************************************************************/
 // copy our dependent script files
-var scriptDependencies = [config.vendorroot + 'jquery/dist/*.map',];
+var scriptDependencies = [config.vendorroot + 'jquery/dist/*.map',
+						config.vendorroot + 'angular/*.map',
+						config.vendorroot + 'angular-route/*.map'];
 
 gulp.task('scriptDependencies', function(){
 	return gulp.src(scriptDependencies)
@@ -82,4 +97,4 @@ gulp.task('scriptDependencies', function(){
 /************************************************************************/
 /************************************************************************/
 // define our defaul gulp action
-gulp.task('default', ['delete', 'vendorscripts', 'vendorstyles', 'appscripts', 'scriptDependencies', 'fonts']);
+gulp.task('default', ['delete', 'vendorscripts', 'vendorstyles', 'appscripts', 'views', 'scriptDependencies', 'fonts']);
