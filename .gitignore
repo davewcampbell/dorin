@@ -3,3 +3,4 @@ www/uploads
 *.log
 www/lib/vendor
 www/public
+.idea
