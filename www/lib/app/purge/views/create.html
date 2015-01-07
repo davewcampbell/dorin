@@ -2,50 +2,64 @@
 <hr />
 
 <div ng-controller="purgeController as purgeCtrl">
-    <div>
-        <div>Name</div>
-        <div>
-            <input type="text" class="form-control" ng-model="purgeCtrl.job.name" />
-        </div>
-    </div>
 
-    <div>
-        <div>Source</div>
-        <div><input type="text" class="form-control" ng-model="purgeCtrl.job.source"/></div>
-    </div>
-    
-    <fieldset>
-        <legend>Options</legend>
+    <form ng-submit="purgeCtrl.submit()" name="createpurge" novalidate>
         <div>
-            <div>Extensions</div>
-            <div><input type="text" class="form-control" ng-model="purgeCtrl.job.extensions"/></div>
-        </div>
-
-        <div>
-            <div>Recursive</div>
-            <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.recurse"/></div>
-        </div>
-
-        <div>
-            <div>Limit</div>
+            <div>Name</div>
             <div>
-                <input type="text"/>
-                <select name="duration" id="duration">
-                    <option value="seconds">Seconds</option>
-                    <option value="minutes">Minutes</option>
-                    <option value="hours">Hours</option>
-                    <option value="days">Days</option>
-                </select>
-
-                <select name="compare" id="compare">
-                    <option value="1">Before</option>
-                    <option value="2">After</option>
-                </select>
+                <input type="text" class="form-control" ng-model="purgeCtrl.job.name" required />
             </div>
         </div>
 
+        <div>
+            <div>Source</div>
+            <div><input type="text" class="form-control" ng-model="purgeCtrl.job.source" required/></div>
+        </div>
+        
+        <fieldset>
+            <legend>Options</legend>
+            <div>
+                <div>Extensions</div>
+                <div><input type="text" class="form-control" ng-model="purgeCtrl.job.extensions" required/></div>
+            </div>
 
-    </fieldset>
+            <div>
+                <div>Recursive</div>
+                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.recurse" required/></div>
+            </div>
 
+            <div>
+                <div>Limit</div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" ng-model="purgeCtrl.job.limit.value" required/>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <select name="duration" id="duration" class="form-control" ng-model="purgeCtrl.job.limit.interval">
+                            <option value="seconds">Seconds</option>
+                            <option value="minutes">Minutes</option>
+                            <option value="hours">Hours</option>
+                            <option value="days">Days</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <select name="compare" id="compare" class="form-control" ng-model="purgeCtrl.job.limit.compareAs">
+                            <option value="1">Before</option>
+                            <option value="2">After</option>
+                        </select>             
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <hr />
+
+        <div class="row text-center">
+            <input type="submit" class="btn btn-primary" value="Create" />
+            <a href="#/jobs" class="btn btn-danger" title="Cancel">Cancel</a>
+        </div>
+    </form>
 
 </div>
