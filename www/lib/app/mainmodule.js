@@ -4,12 +4,16 @@
 	angular.module("dorin", ['ngRoute'])
 	.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/home', {
+            .when('/jobs', {
                 templateUrl: 'lib/views/purge/default.html',
                 controller: 'purgeController'
             })
+            .when('/jobs/add', {
+                templateUrl: 'lib/views/purge/create.html',
+                controller: 'purgeController'
+            })
             .otherwise({
-                redirectTo: '/home'
+                redirectTo: '/jobs'
             });
     }]);
 })();
