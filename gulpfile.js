@@ -3,6 +3,8 @@ var minifyCSS = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var del = require('del');
+var jshint = require('gulp-jshint');
+var plumber = require('gulp-plumber');
 
 
 var config = {
@@ -33,6 +35,8 @@ var vendorScripts = [config.vendorroot + 'angular/angular.min.js',
 gulp.task('vendorscripts', function(){
 	return gulp
 		.src(vendorScripts)
+    	.pipe(plumber()) 
+    	.pipe(jshint())
     	.pipe(concat({ path: 'script/vendor.js'}))
 		.pipe(gulp.dest(config.publiclib));
 });
@@ -59,6 +63,8 @@ var appScripts = [config.approot + 'mainmodule.js',
 gulp.task('appscripts', function(){
 	return gulp
 		.src(appScripts)
+    	.pipe(plumber())    
+    	.pipe(jshint())
     	.pipe(concat({ path: 'script/app.js'}))
 		.pipe(gulp.dest(config.publiclib));
 });
@@ -97,4 +103,11 @@ gulp.task('scriptDependencies', function(){
 /************************************************************************/
 /************************************************************************/
 // define our defaul gulp action
-gulp.task('default', ['delete', 'vendorscripts', 'vendorstyles', 'appscripts', 'views', 'scriptDependencies', 'fonts']);
+gulp.task('default', [	'delete', 
+						'vendorscripts', 
+						'vendorstyles', 
+						'appscripts', 
+						'views', 
+						'scriptDependencies', 
+						'fonts'
+					]);
