@@ -1,0 +1,51 @@
+<h1>Create Purge Job</h1>
+<hr />
+
+<div ng-controller="purgeController as purgeCtrl">
+    <div>
+        <div>Name</div>
+        <div>
+            <input type="text" class="form-control" ng-model="purgeCtrl.job.name" />
+        </div>
+    </div>
+
+    <div>
+        <div>Source</div>
+        <div><input type="text" class="form-control" ng-model="purgeCtrl.job.source"/></div>
+    </div>
+    
+    <fieldset>
+        <legend>Options</legend>
+        <div>
+            <div>Extensions</div>
+            <div><input type="text" class="form-control" ng-model="purgeCtrl.job.extensions"/></div>
+        </div>
+
+        <div>
+            <div>Recursive</div>
+            <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.recurse"/></div>
+        </div>
+
+        <div>
+            <div>Limit</div>
+            <div>
+                <input type="text"/>
+                <select name="duration" id="duration">
+                    <option value="seconds">Seconds</option>
+                    <option value="minutes">Minutes</option>
+                    <option value="hours">Hours</option>
+                    <option value="days">Days</option>
+                </select>
+
+                <select name="compare" id="compare">
+                    <option value="1">Before</option>
+                    <option value="2">After</option>
+                </select>
+            </div>
+        </div>
+
+
+    </fieldset>
+
+
+</div>
