@@ -5,6 +5,7 @@ var concat = require('gulp-concat');
 var del = require('del');
 var jshint = require('gulp-jshint');
 var plumber = require('gulp-plumber');
+var sass = require("gulp-sass");
 
 
 var config = {
@@ -68,6 +69,21 @@ gulp.task('appscripts', function(){
     	.pipe(concat({ path: 'script/app.js'}))
 		.pipe(gulp.dest(config.publiclib));
 });
+/************************************************************************/
+// concat our app styles
+var appStyles = [config.approot + 'style/site.scss'];
+
+gulp.task('appstyles', function(){
+	return gulp
+		.src(config.approot + 'style/*.scss')
+		.pipe(sass({sourcemap: true}))
+		.on('error', function(error){
+			console.log(error);
+			this.emit('end');
+		})
+		//.pipe(concat({ path: 'style/app.css'}))
+		.pipe(gulp.dest(config.publiclib));
+});
 
 /************************************************************************/
 // copy our angular view files
@@ -106,7 +122,8 @@ gulp.task('scriptDependencies', function(){
 gulp.task('default', [	'delete', 
 						'vendorscripts', 
 						'vendorstyles', 
-						'appscripts', 
+						'appscripts',
+						//'appstyles',
 						'views', 
 						'scriptDependencies', 
 						'fonts'
