@@ -14,6 +14,7 @@
     "lodash": "^2.4.1",
     "mkdirp": "^0.5.0",
     "moment": "^2.8.4",
+    "mongoose": "^3.8.21",
     "multer": "^0.1.6",
     "unirest": "^0.3.4",
     "vash": "^0.7.12-1",
@@ -31,7 +32,7 @@
     "supertest": "^0.15.0"
   },
   "scripts": {
-    "test": "mocha .\\tests\\test_app.js"
+    "test": "mocha ./tests/test_mongoose.js ./tests/test_app.js"
   },
   "author": "dave campbell",
   "license": "MIT"
