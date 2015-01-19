@@ -12,6 +12,11 @@
                 templateUrl: 'lib/views/purge/create.html',
                 controller: 'purgeController'
             })
+
+            .when('/jobs/:id/edit', {
+                templateUrl: 'lib/views/purge/edit.html',
+                controller: 'purgeController'
+            })
             .otherwise({
                 redirectTo: '/jobs'
             });
