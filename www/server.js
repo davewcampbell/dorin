@@ -4,6 +4,7 @@ var express = require('express');
 var multer = require('multer'); 
 var app = express();
 var filesRoute = require('./routes/files');
+var jobsRoute = require('./routes/jobs');
 var router = express.Router();
 var path = require("path");
 
@@ -49,6 +50,9 @@ router.get('/api/file/:id?', filesRoute.getById);
 // save file with attachment
 router.post('/api/file', filesRoute.save);
 
+//get list of jobs from mongodb
+router.get('/api/jobs', jobsRoute.getAll);
+router.get('/api/jobs/:id', jobsRoute.getById);
 
 // Default
 router.get("/", function(request, response){
