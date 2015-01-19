@@ -7,6 +7,7 @@ var filesRoute = require('./routes/files');
 var jobsRoute = require('./routes/jobs');
 var router = express.Router();
 var path = require("path");
+var bodyparser = require('body-parser');
 
 
 var expressOptions = {
@@ -17,6 +18,8 @@ var expressOptions = {
 
 // expose the static files in lib
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: true}));
 
 // define our views folder and set the engine
 app.set('views', path.join( __dirname, '/views') ); // critical to use path.join on windows
@@ -50,9 +53,11 @@ router.get('/api/file/:id?', filesRoute.getById);
 // save file with attachment
 router.post('/api/file', filesRoute.save);
 
-//get list of jobs from mongodb
+//Define the Jobs routes for CRUD
 router.get('/api/jobs', jobsRoute.getAll);
 router.get('/api/jobs/:id', jobsRoute.getById);
+router.post('/api/jobs', jobsRoute.addJob);
+router.put('/api/jobs/:id', jobsRoute.saveJob);
 
 // Default
 router.get("/", function(request, response){
