@@ -4,3 +4,4 @@ www/uploads
 www/lib/vendor
 www/public
 .idea
+*.DS_STORE
