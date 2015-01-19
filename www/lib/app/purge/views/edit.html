@@ -2,8 +2,7 @@
 <hr />
 
 <div ng-controller="purgeController as purgeCtrl">
-
-    <form ng-submit="purgeCtrl.submit()"  novalidate>
+    <form ng-submit="purgeCtrl.saveJob()"  novalidate>
         <div>
             <div>Name</div>
             <div>
@@ -26,6 +25,11 @@
             <div>
                 <div>Recursive</div>
                 <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.recursive" required/></div>
+            </div>
+
+            <div>
+                <div>Log Ignored Items</div>
+                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.logIgnored" required/></div>
             </div>
 
             <div>
