@@ -46,10 +46,24 @@ function getById(request, response){
 
 function getLogById(request, response){
     var path = '/jobs/purge/logs/' + request.params.id;
+    // TODO: Get latest log file and return json
 }
 
+function addJob(request, response){
+    //TODO: save request.body to mongo as new object
+    //TODO: Include URL of newly created item
+    response.status(200).end();
+
+}
+
+function saveJob(request, response){
+    // TODO: Save request.body to mongo at id supplied
+    response.status(200).end();
+}
 
 
 module.exports.getAll = getAll;
 module.exports.getById = getById;
 module.exports.getLogById = getLogById;
+module.exports.addJob = addJob;
+module.exports.saveJob = saveJob;
