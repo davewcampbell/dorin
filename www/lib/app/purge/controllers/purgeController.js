@@ -9,6 +9,7 @@
 	function purgeController($http, $routeParams){
 		var vm = this;
 		vm.title = "Dorin";
+		vm.orderBy = 'name';
 		vm.saveJob = saveJob;
 		vm.addJob = addJob;
 		vm.jobs = [];
