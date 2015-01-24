@@ -10,8 +10,10 @@
 		var vm = this;
 		vm.title = "Dorin";
 		vm.orderBy = 'name';
+		vm.reverse = false;
 		vm.saveJob = saveJob;
 		vm.addJob = addJob;
+		vm.setOrder = setOrder;
 		vm.jobs = [];
 		vm.job = {};
 
@@ -25,6 +27,11 @@
 				.error(function(err){
 					console.log(err);
 				});
+		}
+
+		function setOrder(property){
+			vm.orderBy = property;
+			vm.reverse = !vm.reverse;
 		}
 
 		function addJob(){

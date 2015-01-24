@@ -11,13 +11,13 @@
 	<table class="table table-border table-hover table-striped table-condensed">
 		<thead>
 		<tr>
-			<th ng-click="purgeCtrl.orderBy='name';reverse=!reverse">Name</th>
-			<th ng-click="purgeCtrl.orderBy='source';reverse=!reverse">Source</th>
+			<th ng-click="purgeCtrl.setOrder('name')">Name</th>
+			<th ng-click="purgeCtrl.setOrder('source')">Source</th>
 			<th>Actions</th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="job in purgeCtrl.jobs | filter: filterBy | orderBy: purgeCtrl.orderBy : reverse">
+		<tr ng-repeat="job in purgeCtrl.jobs | filter: filterBy | orderBy: purgeCtrl.orderBy : purgeCtrl.reverse">
 			<td>{{job.name}}</td>
 			<td>{{job.source}}</td>
 			<td>
