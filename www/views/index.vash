@@ -2,6 +2,7 @@
 <html ng-app="dorin">
 	<head>
 		<link href="/lib/style/vendor.css" rel="stylesheet" />
+		<link href="/lib/style/app.css" rel="stylesheet" />
 	</head>
 	<body>
 		
@@ -16,6 +17,5 @@
 
 		<!-- App JS -->
 		<script type="text/javascript" src="/lib/script/app.js"></script>
-
 	</body>
 </html>
