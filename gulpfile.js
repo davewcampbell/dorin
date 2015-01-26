@@ -9,18 +9,19 @@ var sass = require("gulp-sass");
 
 
 var config = {
-	vendorroot: 'www/lib/vendor/',
-	approot: 'www/lib/app/',
-	publiclib: 'www/public/lib/'
+	vendorRoot: 'www/lib/vendor/',
+	appRoot: 'www/lib/app/',
+	styleRoot: 'www/lib/style/',
+	publicLib: 'www/public/lib/'
 };
 
 /************************************************************************/
 // Run the delete to clean up old files first
-var deleteFolders = [config.publiclib + '*', 
-					config.publiclib + 'style/*', 					
-					config.publiclib + 'script/*',
-					config.publiclib + 'fonts/*',
-					config.publiclib + 'views/*'];
+var deleteFolders = [config.publicLib + '*',
+					config.publicLib + 'style/*',
+					config.publicLib + 'script/*',
+					config.publicLib + 'fonts/*',
+					config.publicLib + 'views/*'];
 
 gulp.task('delete', function() {
   del.sync(deleteFolders);
@@ -28,91 +29,92 @@ gulp.task('delete', function() {
 
 /************************************************************************/
 // concat our vendor scripts
-var vendorScripts = [config.vendorroot + 'angular/angular.min.js', 
-					config.vendorroot + 'angular-route/angular-route.min.js', 
-					config.vendorroot + 'jquery/dist/jquery.min.js', 
-					config.vendorroot + 'bootstrap/dist/js/bootstrap.min.js'];
+var vendorScripts = [config.vendorRoot + 'angular/angular.min.js',
+					config.vendorRoot + 'angular-route/angular-route.min.js',
+					config.vendorRoot + 'jquery/dist/jquery.min.js',
+					config.vendorRoot + 'bootstrap/dist/js/bootstrap.min.js'];
 
-gulp.task('vendorscripts', function(){
+gulp.task('vendorScripts', function(){
 	return gulp
 		.src(vendorScripts)
-    	.pipe(plumber()) 
+    	.pipe(plumber())
     	.pipe(jshint())
     	.pipe(concat({ path: 'script/vendor.js'}))
-		.pipe(gulp.dest(config.publiclib));
+		.pipe(gulp.dest(config.publicLib));
 });
 
 /************************************************************************/
 // concat our vendor styles 
-var vendorStyles = [config.vendorroot + 'bootstrap/dist/css/bootstrap.min.css', 
-					config.vendorroot + 'fontawesome/css/font-awesome.min.css'];
+var vendorStyles = [config.vendorRoot + 'bootstrap/dist/css/bootstrap.min.css',
+					config.vendorRoot + 'fontawesome/css/font-awesome.min.css'];
 
-gulp.task('vendorstyles', function(){
+gulp.task('vendorStyles', function(){
 	return gulp
 		.src(vendorStyles)
     	.pipe(concat({ path: 'style/vendor.css'}))
-		.pipe(gulp.dest(config.publiclib));
+		.pipe(gulp.dest(config.publicLib));
 });
 
 /************************************************************************/
 // concat our app scripts
-var appScripts = [config.approot + 'mainmodule.js',
-					config.approot + 'purge/controllers/*.js',
-					config.approot + 'purge/services/*.js',
-					config.approot + 'purge/directives/*.js'];
+var appScripts = [config.appRoot + 'mainmodule.js',
+					config.appRoot + 'purge/controllers/*.js',
+					config.appRoot + 'purge/services/*.js',
+					config.appRoot + 'purge/directives/*.js'];
 
-gulp.task('appscripts', function(){
+gulp.task('appScripts', function(){
 	return gulp
 		.src(appScripts)
     	.pipe(plumber())    
     	.pipe(jshint())
     	.pipe(concat({ path: 'script/app.js'}))
-		.pipe(gulp.dest(config.publiclib));
+		.pipe(gulp.dest(config.publicLib));
 });
 /************************************************************************/
 // concat our app styles
-var appStyles = [config.approot + 'style/site.scss'];
+var appStyles = [config.appRoot + 'style/site.scss'];
 
-gulp.task('appstyles', function(){
+gulp.task('appStyles', function(){
 	return gulp
-		.src(config.approot + 'style/*.scss')
-		.pipe(sass({sourcemap: true}))
+		.src(config.styleRoot + '*.scss')
+		.pipe(sass())
 		.on('error', function(error){
 			console.log(error);
 			this.emit('end');
 		})
-		//.pipe(concat({ path: 'style/app.css'}))
-		.pipe(gulp.dest(config.publiclib));
+		.pipe(minifyCSS())
+		.pipe(concat({ path: 'style/app.css'}))
+		.pipe(gulp.dest(config.publicLib));
 });
 
 /************************************************************************/
 // copy our angular view files
-var ngViewFiles = [config.approot + 'purge/views/**.*'];
+var ngViewFiles = [config.appRoot + 'purge/views/**.*'];
 
 gulp.task('views', function(){
 	return gulp.src(ngViewFiles)
-        .pipe(gulp.dest(config.publiclib + 'views/purge'));
+        .pipe(gulp.dest(config.publicLib + 'views/purge'));
 });
 
 /************************************************************************/
 // copy our font files
-var fontFiles = [config.vendorroot + 'bootstrap/dist/fonts/**.*', 
-				config.vendorroot + 'fontawesome/fonts/**.*'];
+var fontFiles = [config.vendorRoot + 'bootstrap/dist/fonts/**.*',
+				config.vendorRoot + 'fontawesome/fonts/**.*'];
 
 gulp.task('fonts', function(){
 	return gulp.src(fontFiles)
-        .pipe(gulp.dest(config.publiclib + 'fonts'));
+        .pipe(gulp.dest(config.publicLib + 'fonts'));
 });
 
 /************************************************************************/
 // copy our dependent script files
-var scriptDependencies = [config.vendorroot + 'jquery/dist/*.map',
-						config.vendorroot + 'angular/*.map',
-						config.vendorroot + 'angular-route/*.map'];
+var scriptDependencies = [config.vendorRoot + 'jquery/dist/*.map',
+						config.vendorRoot + 'angular/*.map',
+						config.vendorRoot + 'angular-route/*.map'];
 
 gulp.task('scriptDependencies', function(){
 	return gulp.src(scriptDependencies)
-        .pipe(gulp.dest(config.publiclib + 'script'));
+        .pipe(gulp.dest(config.publicLib + 'script'));
 });
 
 
@@ -120,10 +122,10 @@ gulp.task('scriptDependencies', function(){
 /************************************************************************/
 // define our defaul gulp action
 gulp.task('default', [	'delete', 
-						'vendorscripts', 
-						'vendorstyles', 
-						'appscripts',
-						//'appstyles',
+						'vendorScripts',
+						'vendorStyles',
+						'appScripts',
+						'appStyles',
 						'views', 
 						'scriptDependencies', 
 						'fonts'
