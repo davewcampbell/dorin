@@ -6,15 +6,18 @@
         $routeProvider
             .when('/jobs', {
                 templateUrl: 'lib/views/purge/default.html',
-                controller: 'purgeController'
+                controller: 'purgeController',
+                controllerAs: 'purgeCtrl'
             })
             .when('/jobs/add', {
                 templateUrl: 'lib/views/purge/create.html',
-                controller: 'purgeController'
+                controller: 'purgeController',
+                controllerAs: 'purgeCtrl'
             })
             .when('/jobs/:id/edit', {
                 templateUrl: 'lib/views/purge/edit.html',
-                controller: 'purgeController'
+                controller: 'purgeController',
+                controllerAs: 'purgeCtrl'
             })
             .otherwise({
                 redirectTo: '/jobs'
