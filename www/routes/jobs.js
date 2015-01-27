@@ -30,7 +30,7 @@ function getAll(request, response){
 // Get By Id
 function getById(request, response){
     // create the query
-    var query = Purge.where({id: request.params.id});
+    var query = Purge.where({_id: request.params.id});
 
     // find the one entry by Id
     query.findOne(function(err, job){
@@ -51,7 +51,9 @@ function getLogById(request, response){
 
 function addJob(request, response){
     //TODO: save request.body to mongo as new object
-    //TODO: Include URL of newly created item
+    //TODO: Include URL of newly created item in response
+    Purge.insert(request.params);
+    var url = "/api/jobs/" + request.params._id;
     response.status(200).end();
 
 }
