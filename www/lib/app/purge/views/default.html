@@ -1,6 +1,4 @@
-
-
-<div ng-controller="purgeController as purgeCtrl">
+<div>
 	<h1>
 		{{purgeCtrl.title}}
 		<a href="#/jobs/add" class="btn btn-primary btn-lg">Add</a>
@@ -21,13 +19,13 @@
 			<td>{{job.name}}</td>
 			<td>{{job.source}}</td>
 			<td>
-				<a href="#/jobs/{{job.id}}/logs" class="btn" title="View Logs">
+				<a href="#/jobs/{{job._id}}/logs" class="btn" title="View Logs">
 					<i class="fa fa-file-text"></i>
 				</a>
-				<a href="#/jobs/{{job.id}}/edit" class="btn" title="Edit Job">
+				<a href="#/jobs/{{job._id}}/edit" class="btn" title="Edit Job">
 					<i class="fa fa-pencil"></i>
 				</a>
-				<a href="#/jobs/{{job.id}}/delete" class="btn" title="Delete Job">
+				<a href="#/jobs/{{job._id}}/delete" class="btn" title="Delete Job">
 					<i class="fa fa-trash"></i>
 				</a>
 			</td>
