@@ -20,15 +20,11 @@
 		vm.title = "Dorin";
 
 		function addJob(){
-			var url = '/api/jobs/';
-
-
-			$http.post(url, vm.job)
-				.success(function(response){
-
-				})
-				.error(function(err){
-					console.log(err);
+			purgeService
+				.addJob(vm.job)
+				.then(function (response){
+					vm.job = response;
+					return vm.job;
 				});
 		}
 
