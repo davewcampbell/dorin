@@ -14,6 +14,7 @@
     function purgeService($http){
 
         var service = {
+            addJob: addJob,
             getAllJobs: getAllJobs,
             getJobById: getJobById,
             saveJob: saveJob
@@ -22,6 +23,19 @@
         return service;
 
         ///////
+
+        function addJob(job){
+            var url = '/api/jobs/';
+
+
+            $http.post(url, job)
+                .then(addJobComplete)
+                .catch(handleError);
+        }
+
+        function addJobComplete(response){
+            return response.data;
+        }
 
         function getAllJobs(){
 
@@ -34,16 +48,16 @@
             return response.data;
         }
 
-        function getJobByIdComplete(response){
-            return response.data;
-        }
-
         function getJobById(id){
 
             return $http.get('/api/jobs/' + id )
-                .then(getAllJobsComplete)
+                .then(getJobByIdComplete)
                 .catch(handleError);
 
+        }
+
+        function getJobByIdComplete(response){
+            return response.data;
         }
 
         function handleError(err){
@@ -55,11 +69,13 @@
 
             var url = '/api/jobs/' + job._id;
 
-            $http.put(url, job)
-                .success(function(response){
-                    return response;
-                })
-                .error(handleError);
+            return $http.put(url, job)
+                .then(saveJobComplete)
+                .catch(handleError);
+        }
+
+        function saveJobComplete(response){
+            return response.data;
         }
     }
 
