@@ -15,6 +15,7 @@
 
         var service = {
             addJob: addJob,
+            deleteJob: deleteJob,
             getAllJobs: getAllJobs,
             getJobById: getJobById,
             saveJob: saveJob
@@ -28,9 +29,22 @@
             var url = '/api/jobs/';
 
 
-            $http.post(url, job)
+            return $http.post(url, job)
                 .then(addJobComplete)
                 .catch(handleError);
+        }
+
+        function deleteJob(id){
+
+            var url = '/api/jobs/' + id;
+
+            return $http.delete(url)
+                .then(deleteJobComplete)
+                .catch(handleError);
+        }
+
+        function deleteJobComplete(response){
+            return true;
         }
 
         function addJobComplete(response){
