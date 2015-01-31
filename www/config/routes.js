@@ -15,6 +15,7 @@ module.exports = function(router){
     router.get('/api/jobs/:id', jobsRoute.getById);
     router.post('/api/jobs', jobsRoute.addJob);
     router.put('/api/jobs/:id', jobsRoute.saveJob);
+    router.delete('/api/jobs/:id', jobsRoute.deleteJob);
 
     // Default
     router.get("/", function(request, response){
