@@ -25,7 +25,8 @@
 				<a href="#/jobs/{{job._id}}/edit" class="btn" title="Edit Job">
 					<i class="fa fa-pencil"></i>
 				</a>
-				<a href="#/jobs/{{job._id}}/delete" class="btn" title="Delete Job">
+
+				<a ng-click="purgeCtrl.deleteJob(job)" title="Delete Job" style="cursor: pointer">
 					<i class="fa fa-trash"></i>
 				</a>
 			</td>
