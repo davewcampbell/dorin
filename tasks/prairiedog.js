@@ -1,17 +1,29 @@
 'use strict';
 
+var fs = require("fs-extra");
+var _ = require("lodash");
+var pathHelper = require('path');
+var moment = require("moment");
+var logger = require("../logger")();
+var unirest = require('unirest');
+var async = require('async');
+var mkdir = require('mkdirp');
+
 /*
 * Main exported function.  Holds the logic and functions for the module
 */
 function main(){
-	var fs = require("fs-extra");
-	var _ = require("lodash");
-	var pathHelper = require('path');
-	var moment = require("moment");
-	var logger = require("../logger")();
-	var unirest = require('unirest');
-	var async = require('async');
-	var mkdir = require('mkdirp');
+
+	/*
+	 * Revealing module pattern. Return an anonymous function with the methods we want exposed.
+	 */
+	return  {
+		post: post,
+		copy: copy,
+		move: move,
+		purge: purge,
+		setLogPath: logger.setLogPath
+	};
 
 	/*
 	* Handles error call backs. Logs the error and returns it to the callback supplied
@@ -155,11 +167,11 @@ function main(){
 
 						// if we are to preserve the diretory structure, we need to update the list of destinations before sending
 						// into the recursive call.  Otherwise, just send the root destination array we got originally.
-						var recusriveDestinations =  preserveDirectoryStructure ? _.map(destinations, function(dest){ 
+						var recursiveDestinations =  preserveDirectoryStructure ? _.map(destinations, function(dest){
 								return pathHelper.resolve(dest, path);
 							}) : destinations;
 
-						crawl(fullpath, recusriveDestinations, options, action, function (err3) {
+						crawl(fullpath, recursiveDestinations, options, action, function (err3) {
 							if(err){ return handleError(err3, cb);}
 							cb(null);
 						});
@@ -223,17 +235,6 @@ function main(){
 		logger.log(parent);
 		crawl(parent, null, options, action, callback);
 	}
-
-	/*
-	* Revealing module pattern. Return an annonomous function with the methods we want exposed.
-	*/
-	return{
-		post: post,
-		copy: copy,
-		move: move,
-		purge: purge,
-		setLogPath: logger.setLogPath
-	};
 }
 
 
