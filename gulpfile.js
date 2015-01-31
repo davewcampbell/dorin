@@ -30,6 +30,7 @@ gulp.task('delete', function() {
 /************************************************************************/
 // concat our vendor scripts
 var vendorScripts = [config.vendorRoot + 'angular/angular.min.js',
+					config.vendorRoot + 'angular-toastr/dist/angular-toastr.min.js',
 					config.vendorRoot + 'angular-route/angular-route.min.js',
 					config.vendorRoot + 'jquery/dist/jquery.min.js',
 					config.vendorRoot + 'bootstrap/dist/js/bootstrap.min.js'];
@@ -46,7 +47,8 @@ gulp.task('vendorScripts', function(){
 /************************************************************************/
 // concat our vendor styles 
 var vendorStyles = [config.vendorRoot + 'bootstrap/dist/css/bootstrap.min.css',
-					config.vendorRoot + 'fontawesome/css/font-awesome.min.css'];
+					config.vendorRoot + 'fontawesome/css/font-awesome.min.css',
+					config.vendorRoot + 'angular-toastr/dist/angular-toastr.min.css'];
 
 gulp.task('vendorStyles', function(){
 	return gulp
@@ -58,6 +60,7 @@ gulp.task('vendorStyles', function(){
 /************************************************************************/
 // concat our app scripts
 var appScripts = [config.appRoot + 'mainmodule.js',
+					config.appRoot + 'services/*.js',
 					config.appRoot + 'purge/controllers/*.js',
 					config.appRoot + 'purge/services/*.js',
 					config.appRoot + 'purge/directives/*.js'];
