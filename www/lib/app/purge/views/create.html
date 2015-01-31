@@ -3,7 +3,7 @@
 
 <div>
 
-    <form ng-submit="purgeCtrl.addJob()" name="createpurge" novalidate>
+    <form ng-submit="purgeCtrl.addJob()" name="createPurge" novalidate>
         <div>
             <div>Name</div>
             <div>
@@ -25,18 +25,25 @@
 
             <div>
                 <div>Recursive</div>
-                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.recurse" required/></div>
+                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.recursive" required/></div>
+            </div>
+
+            <div>
+                <div>
+                    Log Ignored Items
+                </div>
+                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.logIgnored" required/></div>
             </div>
 
             <div>
                 <div>Limit</div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" ng-model="purgeCtrl.job.limit.value" required/>
+                        <input type="text" class="form-control" ng-model="purgeCtrl.job.options.limit.value" required/>
                     </div>
 
                     <div class="col-sm-3">
-                        <select name="duration" id="duration" class="form-control" ng-model="purgeCtrl.job.limit.interval">
+                        <select name="duration" id="duration" class="form-control" ng-model="purgeCtrl.job.options.limit.interval">
                             <option value="seconds">Seconds</option>
                             <option value="minutes">Minutes</option>
                             <option value="hours">Hours</option>
@@ -45,9 +52,9 @@
                     </div>
 
                     <div class="col-sm-3">
-                        <select name="compare" id="compare" class="form-control" ng-model="purgeCtrl.job.limit.compareAs">
-                            <option value="1">Before</option>
-                            <option value="2">After</option>
+                        <select name="compare" id="compare" class="form-control" ng-model="purgeCtrl.job.options.limit.compareAs">
+                            <option value="before">Before</option>
+                            <option value="after">After</option>
                         </select>             
                     </div>
                 </div>
