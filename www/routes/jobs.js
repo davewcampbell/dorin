@@ -52,15 +52,39 @@ function getLogById(request, response){
 function addJob(request, response){
     //TODO: save request.body to mongo as new object
     //TODO: Include URL of newly created item in response
-    Purge.insert(request.params);
-    var url = "/api/jobs/" + request.params._id;
-    response.status(200).end();
+    Purge.create(request.body, function(err, job){
+        if(err){
+            response.status(500).json(err);
+        }
+        else{
+            var url = "/api/jobs/" + job._id;
+            response.status(200).json(url);
+        }
+    });
+}
 
+function deleteJob(request, response){
+    Purge.remove({_id: request.params.id}, function(err){
+        if(err){
+            response.status(500).end();
+        }
+        else{
+            response.status(200).end();
+        }
+    });
 }
 
 function saveJob(request, response){
     // TODO: Save request.body to mongo at id supplied
-    response.status(200).end();
+    Purge.findOneAndUpdate({_id: request.body._id}, request.body, function(err, result){
+
+        if(err){
+            response.status(500).end();
+        }
+        else{
+            response.status(200).json(request.body);
+        }
+    });
 }
 
 
@@ -69,3 +93,4 @@ module.exports.getById = getById;
 module.exports.getLogById = getLogById;
 module.exports.addJob = addJob;
 module.exports.saveJob = saveJob;
+module.exports.deleteJob = deleteJob;
