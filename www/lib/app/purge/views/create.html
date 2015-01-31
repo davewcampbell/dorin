@@ -19,8 +19,11 @@
         <fieldset>
             <legend>Options</legend>
             <div>
-                <div>Extensions</div>
-                <div><input type="text" class="form-control" ng-model="purgeCtrl.job.extensions" required/></div>
+                <div>
+                    Extensions
+                    <i class="fa fa-question-circle" title="Comma delimited list of extensions, including the period (i.e. .jpg, .xml)"></i>
+                </div>
+                <div><input type="text" class="form-control" ng-model="purgeCtrl.job.options.extensions" ng-list required/></div>
             </div>
 
             <div>
