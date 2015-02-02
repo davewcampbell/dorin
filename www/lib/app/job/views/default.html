@@ -1,6 +1,6 @@
 <div>
 	<h1>
-		{{purgeCtrl.title}}
+		{{jobCtrl.title}}
 		<a href="#/jobs/add" class="btn btn-primary btn-lg">Add</a>
 	</h1>
 
@@ -9,14 +9,14 @@
 	<table class="table table-border table-hover table-striped table-condensed">
 		<thead>
 		<tr>
-			<th ng-click="purgeCtrl.setOrder('type')" class="linkify">Type</th>
-			<th ng-click="purgeCtrl.setOrder('name')" class="linkify">Name</th>
-			<th ng-click="purgeCtrl.setOrder('source')" class="linkify">Source</th>
+			<th ng-click="jobCtrl.setOrder('type')" class="linkify">Type</th>
+			<th ng-click="jobCtrl.setOrder('name')" class="linkify">Name</th>
+			<th ng-click="jobCtrl.setOrder('source')" class="linkify">Source</th>
 			<th>Actions</th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="job in purgeCtrl.jobs | filter: filterBy | orderBy: purgeCtrl.orderBy : purgeCtrl.reverse">
+		<tr ng-repeat="job in jobCtrl.jobs | filter: filterBy | orderBy: jobCtrl.orderBy : jobCtrl.reverse">
 			<td>{{job.type}}</td>
 			<td>{{job.name}}</td>
 			<td>{{job.source}}</td>
@@ -28,7 +28,7 @@
 					<i class="fa fa-pencil"></i>
 				</a>
 
-				<a ng-click="purgeCtrl.deleteJob(job)" title="Delete Job" style="cursor: pointer">
+				<a ng-click="jobCtrl.deleteJob(job)" title="Delete Job" style="cursor: pointer">
 					<i class="fa fa-trash"></i>
 				</a>
 			</td>

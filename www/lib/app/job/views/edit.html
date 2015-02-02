@@ -2,11 +2,11 @@
 <hr />
 
 <div>
-    <form id="editForm" ng-submit="purgeCtrl.saveJob()"  novalidate>
+    <form id="editForm" ng-submit="jobCtrl.saveJob()"  novalidate>
         <div>
             <div>Job Type</div>
             <div>
-                <select ng-model="purgeCtrl.job.type" class="form-control">
+                <select ng-model="jobCtrl.job.type" class="form-control">
                     <option value="purge">Purge</option>
                     <option value="copy">Copy</option>
                     <option value="move">Move</option>
@@ -18,21 +18,21 @@
         <div>
             <div>Name</div>
             <div>
-                <input type="text" class="form-control" ng-model="purgeCtrl.job.name" required />
+                <input type="text" class="form-control" ng-model="jobCtrl.job.name" required />
             </div>
         </div>
 
         <div>
             <div>Source</div>
-            <div><input type="text" class="form-control" ng-model="purgeCtrl.job.source" required/></div>
+            <div><input type="text" class="form-control" ng-model="jobCtrl.job.source" required/></div>
         </div>
 
-        <div ng-show="purgeCtrl.isAllowedDestinations()">
+        <div ng-show="jobCtrl.isAllowedDestinations()">
             <div>Destinations</div>
             <div><textarea name="" id=""
                            ng-list="&#10;"
                            ng-trim="false"
-                           ng-model="purgeCtrl.job.destinations"
+                           ng-model="jobCtrl.job.destinations"
                            cols="30" rows="3" class="form-control"></textarea></div>
         </div>
 
@@ -43,35 +43,35 @@
                     Extensions
                     <i class="fa fa-question-circle" title="Comma delimited list of extensions, including the period (i.e. .jpg, .xml)"></i>
                 </div>
-                <div><input type="text" class="form-control" ng-model="purgeCtrl.job.options.extensions" ng-list required/></div>
+                <div><input type="text" class="form-control" ng-model="jobCtrl.job.options.extensions" ng-list required/></div>
             </div>
 
             <div>
                 <div>Recursive</div>
-                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.recursive" required/></div>
+                <div><input type="checkbox" class="form-control" ng-model="jobCtrl.job.options.recursive" required/></div>
             </div>
 
-            <div ng-show="purgeCtrl.isAllowedDestinations()">
+            <div ng-show="jobCtrl.isAllowedDestinations()">
                 <div>Preserve Directory Structure</div>
-                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.preserveDirectoryStructure" required/></div>
+                <div><input type="checkbox" class="form-control" ng-model="jobCtrl.job.options.preserveDirectoryStructure" required/></div>
             </div>
 
             <div>
                 <div>
                     Log Ignored Items
                 </div>
-                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.logIgnored" required/></div>
+                <div><input type="checkbox" class="form-control" ng-model="jobCtrl.job.options.logIgnored" required/></div>
             </div>
 
             <div>
                 <div>Limit</div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="number" class="form-control" ng-model="purgeCtrl.job.options.limit.value" required/>
+                        <input type="number" class="form-control" ng-model="jobCtrl.job.options.limit.value" required/>
                     </div>
 
                     <div class="col-sm-3">
-                        <select name="duration" id="duration" class="form-control" ng-model="purgeCtrl.job.options.limit.interval">
+                        <select name="duration" id="duration" class="form-control" ng-model="jobCtrl.job.options.limit.interval">
                             <option value="seconds">Seconds</option>
                             <option value="minutes">Minutes</option>
                             <option value="hours">Hours</option>
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="col-sm-3">
-                        <select name="compare" id="compare" class="form-control" ng-model="purgeCtrl.job.options.limit.compareAs">
+                        <select name="compare" id="compare" class="form-control" ng-model="jobCtrl.job.options.limit.compareAs">
                             <option value="before">Before</option>
                             <option value="after">After</option>
                         </select>
