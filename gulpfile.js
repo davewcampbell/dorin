@@ -61,9 +61,9 @@ gulp.task('vendorStyles', function(){
 // concat our app scripts
 var appScripts = [config.appRoot + 'mainmodule.js',
 					config.appRoot + 'services/*.js',
-					config.appRoot + 'purge/controllers/*.js',
-					config.appRoot + 'purge/services/*.js',
-					config.appRoot + 'purge/directives/*.js'];
+					config.appRoot + 'job/controllers/*.js',
+					config.appRoot + 'job/services/*.js',
+					config.appRoot + 'job/directives/*.js'];
 
 gulp.task('appScripts', function(){
 	return gulp
@@ -92,11 +92,11 @@ gulp.task('appStyles', function(){
 
 /************************************************************************/
 // copy our angular view files
-var ngViewFiles = [config.appRoot + 'purge/views/**.*'];
+var ngViewFiles = [config.appRoot + 'job/views/**.*'];
 
 gulp.task('views', function(){
 	return gulp.src(ngViewFiles)
-        .pipe(gulp.dest(config.publicLib + 'views/purge'));
+        .pipe(gulp.dest(config.publicLib + 'views/job'));
 });
 
 /************************************************************************/
