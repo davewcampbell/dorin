@@ -24,7 +24,6 @@
         return service;
 
         ///////
-
         function addJob(job){
             var url = '/api/jobs/';
 
@@ -32,6 +31,10 @@
             return $http.post(url, job)
                 .then(addJobComplete)
                 .catch(handleError);
+        }
+
+        function addJobComplete(response){
+            return response.data;
         }
 
         function deleteJob(id){
@@ -45,10 +48,6 @@
 
         function deleteJobComplete(response){
             return true;
-        }
-
-        function addJobComplete(response){
-            return response.data;
         }
 
         function getAllJobs(){

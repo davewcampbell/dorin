@@ -3,12 +3,14 @@
 var mongoose = require('mongoose');
 
 var job = {
-    id: String,
+    type: String,
     name: String,
     source: String,
+    destinations: [String],
     options: {
         extensions: [String],
         recursive: Boolean,
+        preserveDirectoryStructure: Boolean,
         limit: {
             value: Number,
             interval: String,

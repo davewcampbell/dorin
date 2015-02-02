@@ -12,6 +12,7 @@
 		var vm = this;
 		vm.addJob = addJob;
 		vm.deleteJob = deleteJob;
+		vm.isAllowedDestinations = isAllowedDestinations;
 		vm.jobs = [];
 		vm.job = {};
 		vm.orderBy = 'name';
@@ -48,6 +49,16 @@
 					})
 					.catch(handleError);
 			}
+		}
+
+		function isAllowedDestinations(){
+			if(!vm.job) return false;
+
+			if(!vm.job.type) return false;
+
+			if(vm.job.type == 'purge') return false;
+
+			return true;
 		}
 
 		function init(){

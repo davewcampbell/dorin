@@ -1,9 +1,20 @@
-<h1>Create Purge Job</h1>
+<h1>Edit Job</h1>
 <hr />
 
 <div>
+    <form id="editForm" ng-submit="purgeCtrl.saveJob()"  novalidate>
+        <div>
+            <div>Job Type</div>
+            <div>
+                <select ng-model="purgeCtrl.job.type" class="form-control">
+                    <option value="purge">Purge</option>
+                    <option value="copy">Copy</option>
+                    <option value="move">Move</option>
+                    <option value="post">Post</option>
+                </select>
+            </div>
+        </div>
 
-    <form ng-submit="purgeCtrl.addJob()" name="createPurge" novalidate>
         <div>
             <div>Name</div>
             <div>
@@ -15,7 +26,16 @@
             <div>Source</div>
             <div><input type="text" class="form-control" ng-model="purgeCtrl.job.source" required/></div>
         </div>
-        
+
+        <div ng-show="purgeCtrl.isAllowedDestinations()">
+            <div>Destinations</div>
+            <div><textarea name="" id=""
+                           ng-list="&#10;"
+                           ng-trim="false"
+                           ng-model="purgeCtrl.job.destinations"
+                           cols="30" rows="3" class="form-control"></textarea></div>
+        </div>
+
         <fieldset>
             <legend>Options</legend>
             <div>
@@ -31,6 +51,11 @@
                 <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.recursive" required/></div>
             </div>
 
+            <div ng-show="purgeCtrl.isAllowedDestinations()">
+                <div>Preserve Directory Structure</div>
+                <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.preserveDirectoryStructure" required/></div>
+            </div>
+
             <div>
                 <div>
                     Log Ignored Items
@@ -42,7 +67,7 @@
                 <div>Limit</div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" ng-model="purgeCtrl.job.options.limit.value" required/>
+                        <input type="number" class="form-control" ng-model="purgeCtrl.job.options.limit.value" required/>
                     </div>
 
                     <div class="col-sm-3">
@@ -58,7 +83,7 @@
                         <select name="compare" id="compare" class="form-control" ng-model="purgeCtrl.job.options.limit.compareAs">
                             <option value="before">Before</option>
                             <option value="after">After</option>
-                        </select>             
+                        </select>
                     </div>
                 </div>
             </div>
@@ -67,7 +92,7 @@
         <hr />
 
         <div class="row text-center">
-            <input type="submit" class="btn btn-primary" value="Create" />
+            <input type="submit" class="btn btn-primary" value="Save" />
             <a href="#/jobs" class="btn btn-danger" title="Cancel">Cancel</a>
         </div>
     </form>

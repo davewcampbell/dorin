@@ -1,0 +1,99 @@
+<h1>Create Job</h1>
+<hr />
+
+
+<form ng-submit="purgeCtrl.addJob()" name="createPurge" novalidate>
+    <div>
+        <div>Job Type</div>
+        <div>
+            <select ng-model="purgeCtrl.job.type" class="form-control">
+                <option value="purge">Purge</option>
+                <option value="copy">Copy</option>
+                <option value="move">Move</option>
+                <option value="post">Post</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <div>Name</div>
+        <div>
+            <input type="text" class="form-control" ng-model="purgeCtrl.job.name" required />
+        </div>
+    </div>
+
+    <div>
+        <div>Source</div>
+        <div><input type="text" class="form-control" ng-model="purgeCtrl.job.source" required/></div>
+    </div>
+
+    <div ng-show="purgeCtrl.isAllowedDestinations()">
+        <div>Destinations</div>
+        <div><textarea name="" id=""
+                       ng-list="&#10;"
+                       ng-trim="false"
+                       ng-model="purgeCtrl.job.destinations"
+                       cols="30" rows="10" class="form-control"></textarea></div>
+    </div>
+
+    <fieldset>
+        <legend>Options</legend>
+        <div>
+            <div>
+                Extensions
+                <i class="fa fa-question-circle" title="Comma delimited list of extensions, including the period (i.e. .jpg, .xml)"></i>
+            </div>
+            <div><input type="text" class="form-control" ng-model="purgeCtrl.job.options.extensions" ng-list required/></div>
+        </div>
+
+        <div>
+            <div>Recursive</div>
+            <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.recursive" required/></div>
+        </div>
+
+        <div ng-show="purgeCtrl.isAllowedDestinations()">
+            <div>Preserve Directory Structure</div>
+            <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.preserveDirectoryStructure" required/></div>
+        </div>
+
+        <div>
+            <div>
+                Log Ignored Items
+            </div>
+            <div><input type="checkbox" class="form-control" ng-model="purgeCtrl.job.options.logIgnored" required/></div>
+        </div>
+
+        <div>
+            <div>Limit</div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="purgeCtrl.job.options.limit.value" required/>
+                </div>
+
+                <div class="col-sm-3">
+                    <select name="duration" id="duration" class="form-control" ng-model="purgeCtrl.job.options.limit.interval">
+                        <option value="seconds">Seconds</option>
+                        <option value="minutes">Minutes</option>
+                        <option value="hours">Hours</option>
+                        <option value="days">Days</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-3">
+                    <select name="compare" id="compare" class="form-control" ng-model="purgeCtrl.job.options.limit.compareAs">
+                        <option value="before">Before</option>
+                        <option value="after">After</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <hr />
+
+    <div class="row text-center">
+        <input type="submit" class="btn btn-primary" value="Create" />
+        <a href="#/jobs" class="btn btn-danger" title="Cancel">Cancel</a>
+    </div>
+</form>
+
