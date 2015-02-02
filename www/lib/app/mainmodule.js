@@ -5,19 +5,19 @@
 	.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/jobs', {
-                templateUrl: 'lib/views/purge/default.html',
-                controller: 'purgeController',
-                controllerAs: 'purgeCtrl'
+                templateUrl: 'lib/views/job/default.html',
+                controller: 'jobController',
+                controllerAs: 'jobCtrl'
             })
             .when('/jobs/add', {
-                templateUrl: 'lib/views/purge/create.html',
-                controller: 'purgeController',
-                controllerAs: 'purgeCtrl'
+                templateUrl: 'lib/views/job/create.html',
+                controller: 'jobController',
+                controllerAs: 'jobCtrl'
             })
             .when('/jobs/:id/edit', {
-                templateUrl: 'lib/views/purge/edit.html',
-                controller: 'purgeController',
-                controllerAs: 'purgeCtrl'
+                templateUrl: 'lib/views/job/edit.html',
+                controller: 'jobController',
+                controllerAs: 'jobCtrl'
             })
             .otherwise({
                 redirectTo: '/jobs'
