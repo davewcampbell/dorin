@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 
-var Purge = require('../../models/purgeJob');
+var dorinJob = require('../../models/dorinJob');
 
 var db = mongoose.connection;
 
@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost/test');
 // Get all
 function getAll(request, response){
 
-    Purge.find(function(err, jobs){
+    dorinJob.find(function(err, jobs){
 
         if(err){
             response.status(500).end(err);
@@ -30,7 +30,7 @@ function getAll(request, response){
 // Get By Id
 function getById(request, response){
     // create the query
-    var query = Purge.where({_id: request.params.id});
+    var query = dorinJob.where({_id: request.params.id});
 
     // find the one entry by Id
     query.findOne(function(err, job){
@@ -52,7 +52,7 @@ function getLogById(request, response){
 function addJob(request, response){
     //TODO: save request.body to mongo as new object
     //TODO: Include URL of newly created item in response
-    Purge.create(request.body, function(err, job){
+    dorinJob.create(request.body, function(err, job){
         if(err){
             response.status(500).json(err);
         }
@@ -64,7 +64,7 @@ function addJob(request, response){
 }
 
 function deleteJob(request, response){
-    Purge.remove({_id: request.params.id}, function(err){
+    dorinJob.remove({_id: request.params.id}, function(err){
         if(err){
             response.status(500).end();
         }
@@ -76,7 +76,7 @@ function deleteJob(request, response){
 
 function saveJob(request, response){
     // TODO: Save request.body to mongo at id supplied
-    Purge.findOneAndUpdate({_id: request.body._id}, request.body, function(err, result){
+    dorinJob.findOneAndUpdate({_id: request.body._id}, request.body, function(err, result){
 
         if(err){
             response.status(500).end();
