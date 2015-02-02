@@ -7,11 +7,11 @@
 
     angular
         .module('dorin')
-        .factory('purgeService', purgeService);
+        .factory('jobService', jobService);
 
-    purgeService.$inject = ['$http'];
+    jobService.$inject = ['$http'];
 
-    function purgeService($http){
+    function jobService($http){
 
         var service = {
             addJob: addJob,
