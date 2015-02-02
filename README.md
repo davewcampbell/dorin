@@ -12,36 +12,85 @@ The goal of the project is to perform actions on file systems in bulk.  The curr
 
 ### prairiedog
 
-The prairiedog task holds the log to crawl a single path specified with a list of options and perform one of the actions above to each file matching the criteria.
+The prairiedog task holds the logic to crawl a single source path specified with a list of options and perform one of the actions above to each file matching the criteria.
 
 
 #### Purge
 
-* Source
-* Options
+* source
+* options
+
+###### source 
+
+The path to where the process should begin.
+
+###### options
+
+Holds the options that define how to target specific files.
+
+`activity.purge('/source',
+			options,
+			function(err){});`
+
 
 #### Move
 
-* Source
-* Destination
-* Options
+* source
+* destination
+* options
+
+###### source 
+
+The path to where the process should begin.
+
+###### destination
+
+The location where the targeted files are to be moved. Since this is a move, only one destination is supported. 
+
+###### options
+
+Holds the options that define how to target specific files.
+
 
 #### Copy
 * Source
 * Destinations
 * Options
 
+###### source 
+
+The path to where the process should begin.
+
+###### destinations
+
+A string array of locations to where the targeted files are to be copied.  
+
+###### options
+
+Holds the options that define how to target specific files.
+
 #### Post
 * Source
 * Destinations
 * Options
 
+###### source 
+
+The path to where the process should begin.
+
+###### destinations
+
+A string array of URIs to where the files are to be posted. 
+
+###### options
+
+Holds the options that define how to target specific files.
 
 ### options
 * extensions
 * recursive
 * preserveDirectoryStructure
-* logIgnoredItems
+* logIgnored
 * limit
 
 #### extensions
@@ -66,13 +115,13 @@ A boolean value to indicate if the current directory structure should be preserv
 
 If the source value for copy is `/source` and we are in `level1/`, preserving the directory strucutre would cause the file to be copied to `/destination/level1/`. Otherwise, the file would be moved to `/destination` only.
 
-#### logIgnoredItems
+#### logIgnored
 
 A boolean value to indicate if items that are not processed should be logged or not. Default is false as it will add a lot of data to the log files. But it is useful for auditing to know that a file was found in the folder at run time, but was not processed as it didn't meet the criteria set forth in the options.
 
 Example
 
-`options.logIgnoredItems = false;`
+`options.logIgnored = false;`
 
 #### limit
 
