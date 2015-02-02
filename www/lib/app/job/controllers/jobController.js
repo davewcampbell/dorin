@@ -3,12 +3,12 @@
 
 	angular
 		.module("dorin")
-		.controller("purgeController", purgeController);
+		.controller("jobController", jobController);
 
 
-	purgeController.$inject = ['$routeParams', '$window', '$location', 'purgeService', 'notifyService'];
+	jobController.$inject = ['$routeParams', '$window', '$location', 'jobService', 'notifyService'];
 
-	function purgeController($routeParams, $window, $location, purgeService, notifyService){
+	function jobController($routeParams, $window, $location, jobService, notifyService){
 		var vm = this;
 		vm.addJob = addJob;
 		vm.deleteJob = deleteJob;
@@ -22,7 +22,7 @@
 		vm.title = "Dorin";
 
 		function addJob(){
-			purgeService
+			jobService
 				.addJob(vm.job)
 				.then(function (response){
 					vm.job = response;
@@ -39,7 +39,7 @@
 			var result = $window.confirm("Are you sure you wish to delete this job?");
 
 			if(result){
-				purgeService
+				jobService
 					.deleteJob(job._id)
 					.then(function(response){
 						var index = vm.jobs.indexOf(job);
@@ -64,7 +64,7 @@
 		function init(){
 			if($routeParams.id){
 
-				purgeService
+				jobService
 					.getJobById($routeParams.id)
 					.then(function(response){
 						vm.job = response;
@@ -75,7 +75,7 @@
 			}
 			else{
 
-				purgeService
+				jobService
 					.getAllJobs()
 					.then(function(response){
 						vm.jobs = response;
@@ -86,7 +86,7 @@
 		}
 
 		function saveJob(){
-			purgeService
+			jobService
 				.saveJob(vm.job)
 				.then(function(response){
 					vm.job = response;
