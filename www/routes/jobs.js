@@ -13,6 +13,32 @@ db.once('open', function() {
 
 mongoose.connect('mongodb://localhost/test');
 
+
+function addJob(request, response){
+    //TODO: save request.body to mongo as new object
+    //TODO: Include URL of newly created item in response
+    dorinJob.create(request.body, function(err, job){
+        if(err){
+            response.status(500).json(err);
+        }
+        else{
+            var url = "/api/jobs/" + job._id;
+            response.status(200).json(url);
+        }
+    });
+}
+
+function deleteJob(request, response){
+    dorinJob.remove({_id: request.params.id}, function(err){
+        if(err){
+            response.status(500).end();
+        }
+        else{
+            response.status(200).end();
+        }
+    });
+}
+
 // Get all
 function getAll(request, response){
 
@@ -49,28 +75,18 @@ function getLogById(request, response){
     // TODO: Get latest log file and return json
 }
 
-function addJob(request, response){
-    //TODO: save request.body to mongo as new object
-    //TODO: Include URL of newly created item in response
-    dorinJob.create(request.body, function(err, job){
-        if(err){
-            response.status(500).json(err);
-        }
-        else{
-            var url = "/api/jobs/" + job._id;
-            response.status(200).json(url);
-        }
-    });
-}
+function getByType(request, response){
 
-function deleteJob(request, response){
-    dorinJob.remove({_id: request.params.id}, function(err){
-        if(err){
-            response.status(500).end();
-        }
+    var query = dorinJob.where({type: request.params.type});
+
+
+    query.find(function (err, jobs){
+       if(err){
+           response.status(500).json(err);
+       }
         else{
-            response.status(200).end();
-        }
+           response.json(jobs);
+       }
     });
 }
 
@@ -87,10 +103,10 @@ function saveJob(request, response){
     });
 }
 
-
+module.exports.addJob = addJob;
+module.exports.deleteJob = deleteJob;
 module.exports.getAll = getAll;
 module.exports.getById = getById;
 module.exports.getLogById = getLogById;
-module.exports.addJob = addJob;
+module.exports.getByType = getByType;
 module.exports.saveJob = saveJob;
-module.exports.deleteJob = deleteJob;
