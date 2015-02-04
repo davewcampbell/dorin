@@ -221,9 +221,9 @@ function main(){
 	* Publicly exposed method to move files to the destinations according to the options supplied.  
 	* Control is returned to callback after all files are moved.
 	*/
-	function move(parent, destination, options, callback){
+	function move(parent, destinations, options, callback){
 		var action = moveItem;
-		crawl(parent, [destination], options, action, callback);
+		crawl(parent, destinations, options, action, callback);
 	}
 
 	/*
