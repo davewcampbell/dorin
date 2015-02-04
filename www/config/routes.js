@@ -13,6 +13,7 @@ module.exports = function(router){
     //Define the Jobs routes for CRUD
     router.get('/api/jobs', jobsRoute.getAll);
     router.get('/api/jobs/:id', jobsRoute.getById);
+    router.get('/api/jobs/type/:type', jobsRoute.getByType);
     router.post('/api/jobs', jobsRoute.addJob);
     router.put('/api/jobs/:id', jobsRoute.saveJob);
     router.delete('/api/jobs/:id', jobsRoute.deleteJob);
