@@ -4,6 +4,7 @@ var _ = require('lodash');
 var async = require('async');
 var logger = require('../../logger')();
 var task = require('../../tasks/prairiedog');
+var http = require('http');
 
 
 function log(message){
@@ -22,26 +23,45 @@ function handleCallback(err, name){
 	}
 }
 
+function runJobs(jobs){
 
-//********* Main **********//
-// Data store, should be moved to a database or service file
-var jobs = require('./data');
+	// ensure there are jobs found
+	if(jobs && jobs.length){
 
-// ensure there are jobs found
-if(jobs && jobs.length){
+		_.forEach(jobs, function(job){
 
-	_.forEach(jobs, function(job){
-		var activity = task();
-		activity.setLogPath(__dirname, job.id);
+			var activity = task();
+			activity.setLogPath(__dirname, job.id);
 
-		// run the purge activity
-		activity.purge(job.source,
-			job.options,
-			function(err){
-				handleCallback(err, job.name);
-			});
-
-	});
+			// run the purge activity
+			activity.purge(job.source,
+				job.options,
+				function(err){
+					handleCallback(err, job.name);
+				});
+		});
+	}
+	else{
+		log("No purge jobs found. Exiting.");
+	}
 }
 
 
+//********* Main **********//
+// Call our api to get the data
+var url = 'http://localhost:3000/api/jobs/type/purge';
+
+http.get(url, function(res) {
+	var body = '';
+
+	res.on('data', function(chunk) {
+		body += chunk;
+	});
+
+	res.on('end', function() {
+		var jobs = JSON.parse(body);
+		runJobs(jobs);
+	});
+}).on('error', function(e) {
+	log("Error received from HTTP Get of jobs: " + e);
+});
