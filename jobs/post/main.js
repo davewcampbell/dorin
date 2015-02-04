@@ -1,49 +1,68 @@
 'use strict';
-
-var task = require('../../tasks/prairiedog');
-var logger = require('../../logger')();
-var moment = require('moment');
+var moment = require("moment");
 var _ = require('lodash');
+var async = require('async');
+var logger = require('../../logger')();
+var task = require('../../tasks/prairiedog');
+var http = require('http');
 
-var jobs = require('./data');
 
-var start = new Date();
+function log(message){
+	logger.log(message);
+}
+
 /*
-* Helper function for call backs from the jobs
-*/
-function handleCallback(err, name) {
+ * Helper function for call backs from the jobs
+ */
+function handleCallback(err, name){
 	if(err){
 		logger.error("Error for: " + name + " -- " + err);
 	}
-
 	else{
-		logger.info(name + " has completed successfully");		
+		log(name + " has completed successfully");
 	}
+}
 
-	var duration = (new Date() - start) * 0.001;
+function runJobs(jobs){
 
-	logger.log("Total Time: " + duration + " seconds");
+	// ensure there are jobs found
+	if(jobs && jobs.length){
 
+		_.forEach(jobs, function(job){
+
+			var activity = task();
+			activity.setLogPath(__dirname, job.id);
+
+			// run the purge activity
+			activity.post(job.source,
+				job.destinations,
+				job.options,
+				function(err){
+					handleCallback(err, job.name);
+				});
+		});
+	}
+	else{
+		log("No post jobs found. Exiting.");
+	}
 }
 
 
-_.forEach(jobs, function (job) {
-	var activity = task();
-	activity.setLogPath(__dirname, job.id);
-	logger.log(job.name);
+//********* Main **********//
+// Call our api to get the data
+var url = 'http://localhost:3000/api/jobs/type/post';
 
-	var options = {
-		extensions: job.extensions,
-		recursive: job.recursive,
-		limit: moment().subtract(job.limit.value, job.limit.key),
-		compareAs: job.limit.compareAs,
-		logIgnored: job.logIgnored
-	};
+http.get(url, function(res) {
+	var body = '';
 
-
-	activity.post(job.source, job.destinations, options, function (err) {
-		handleCallback(err, job.name);
+	res.on('data', function(chunk) {
+		body += chunk;
 	});
+
+	res.on('end', function() {
+		var jobs = JSON.parse(body);
+		runJobs(jobs);
+	});
+}).on('error', function(e) {
+	log("Error received from HTTP Get of jobs: " + e);
 });
-
-

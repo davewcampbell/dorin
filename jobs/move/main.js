@@ -1,59 +1,68 @@
 'use strict';
 var moment = require("moment");
 var _ = require('lodash');
+var async = require('async');
+var logger = require('../../logger')();
 var task = require('../../tasks/prairiedog');
-var winston = require('winston');
-
-//********* Main **********//
-// Data store, our models
-var jobs = require('./data');
-
-
+var http = require('http');
 
 
 function log(message){
-	winston.log(message);
-	winston.info(message);
+	logger.log(message);
 }
 
 /*
-* Helper function for call backs from the jobs
-*/
+ * Helper function for call backs from the jobs
+ */
 function handleCallback(err, name){
-
 	if(err){
-		log("Error for: " + name + " -- " + err);
+		logger.error("Error for: " + name + " -- " + err);
 	}
 	else{
 		log(name + " has completed successfully");
 	}
 }
 
-// ensure there are jobs found
-if(jobs && jobs.length){
+function runJobs(jobs){
 
-	_.forEach(jobs, function(job){
-		var activity = task();
-		activity.setLogPath(__dirname, job.id);
+	// ensure there are jobs found
+	if(jobs && jobs.length){
 
-		// use the current job to set the options for this activity
-		var options = {
-			extensions: job.extensions,
-			recursive: job.recursive,
-			preserveDirectoryStructure: job.preserveDirectoryStructure,
-			limit: moment().subtract(job.limit.value, job.limit.key),
-			compareAs: job.limit.compareAs,
-			logIgnored: job.logIgnored
-		};
+		_.forEach(jobs, function(job){
 
-		// run the move activity
-		activity.move(job.source,
-			job.destination,
-			options,
-			function(err){
-				handleCallback(err, job.name);
-			});
+			var activity = task();
+			activity.setLogPath(__dirname, job.id);
 
-		log(job.name);
-	});
+			// run the purge activity
+			activity.move(job.source,
+				job.destinations,
+				job.options,
+				function(err){
+					handleCallback(err, job.name);
+				});
+		});
+	}
+	else{
+		log("No move jobs found. Exiting.");
+	}
 }
+
+
+//********* Main **********//
+// Call our api to get the data
+var url = 'http://localhost:3000/api/jobs/type/move';
+
+http.get(url, function(res) {
+	var body = '';
+
+	res.on('data', function(chunk) {
+		body += chunk;
+	});
+
+	res.on('end', function() {
+		var jobs = JSON.parse(body);
+		runJobs(jobs);
+	});
+}).on('error', function(e) {
+	log("Error received from HTTP Get of jobs: " + e);
+});

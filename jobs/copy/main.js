@@ -1,55 +1,68 @@
 'use strict';
 var moment = require("moment");
 var _ = require('lodash');
+var async = require('async');
+var logger = require('../../logger')();
 var task = require('../../tasks/prairiedog');
-var logger = require("../../logger")();
+var http = require('http');
 
-//********* Main **********//
-// Data store, our models
-var jobs = require('./data');
 
 function log(message){
 	logger.log(message);
 }
 
 /*
-* Helper function for call backs from the jobs
-*/
+ * Helper function for call backs from the jobs
+ */
 function handleCallback(err, name){
-
 	if(err){
-		log("Error for: " + name + " -- " + err);
+		logger.error("Error for: " + name + " -- " + err);
 	}
 	else{
-		log(name + " has completed successfully");		
+		log(name + " has completed successfully");
+	}
+}
+
+function runJobs(jobs){
+
+	// ensure there are jobs found
+	if(jobs && jobs.length){
+
+		_.forEach(jobs, function(job){
+
+			var activity = task();
+			activity.setLogPath(__dirname, job.id);
+
+			// run the purge activity
+			activity.copy(job.source,
+				job.destinations,
+				job.options,
+				function(err){
+					handleCallback(err, job.name);
+				});
+		});
+	}
+	else{
+		log("No copy jobs found. Exiting.");
 	}
 }
 
 
-// ensure there are jobs found
-if(jobs && jobs.length){
+//********* Main **********//
+// Call our api to get the data
+var url = 'http://localhost:3000/api/jobs/type/copy';
 
-	_.forEach(jobs, function(job){
-		var activity = task();
-		activity.setLogPath(__dirname, job.id);
-		log(job.name);
+http.get(url, function(res) {
+	var body = '';
 
-		// use the current job to set the options for this activity
-		var options = {
-			extensions: job.extensions,
-			recursive: job.recursive,
-			preserveDirectoryStructure: job.preserveDirectoryStructure,
-			limit: moment().subtract(job.limit.value, job.limit.key),
-			compareAs: job.limit.compareAs,
-			logIgnored: job.logIgnored
-		};
-
-		// run the move activity
-		activity.copy(job.source,
-			job.destinations,
-			options,
-			function(err){
-				handleCallback(err, job.name);
-			});
+	res.on('data', function(chunk) {
+		body += chunk;
 	});
-}
+
+	res.on('end', function() {
+		var jobs = JSON.parse(body);
+		runJobs(jobs);
+	});
+}).on('error', function(e) {
+	log("Error received from HTTP Get of jobs: " + e);
+});
