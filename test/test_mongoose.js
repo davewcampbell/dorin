@@ -7,7 +7,7 @@ describe("Mongoose", function(){
     it("gets data from the test database", function(done){
 
         var mongoose = require('mongoose');
-        var Purge = require('../models/purgeJob');
+        var Purge = require('../models/dorinJob');
 
         var db = mongoose.connection;
 
@@ -24,7 +24,7 @@ describe("Mongoose", function(){
         Purge.find(function(err, jobs){
 
             expect(err).to.be.undefined;
-            expect(jobs).not.to.be.null
+            expect(jobs).not.to.be.null;
             expect(jobs).not.to.be.empty;
             expect(jobs[0]).to.have.property('name');
             expect(jobs[0].name).to.be.ok;
