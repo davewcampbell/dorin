@@ -12,12 +12,12 @@ var mkdir = require('mkdirp');
 /*
 * Main exported function.  Holds the logic and functions for the module
 */
-function main(){
+function main() {
 
 	/*
 	 * Revealing module pattern. Return an anonymous function with the methods we want exposed.
 	 */
-	return  {
+	return {
 		post: post,
 		copy: copy,
 		move: move,
