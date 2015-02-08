@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 
-	angular.module("dorin", ['ngRoute', 'toastr'])
+	angular.module('dorin', ['ngRoute', 'toastr'])
 	.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/jobs', {

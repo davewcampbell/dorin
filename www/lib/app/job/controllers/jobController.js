@@ -2,8 +2,8 @@
 	'use strict';
 
 	angular
-		.module("dorin")
-		.controller("jobController", jobController);
+		.module('dorin')
+		.controller('jobController', jobController);
 
 
 	jobController.$inject = ['$routeParams', '$window', '$location', 'jobService', 'notifyService'];
@@ -19,7 +19,7 @@
 		vm.reverse = false;
 		vm.saveJob = saveJob;
 		vm.setOrder = setOrder;
-		vm.title = "Dorin";
+		vm.title = 'Dorin';
 
 		function addJob(){
 			jobService
@@ -28,7 +28,7 @@
 					vm.job = response;
 					vm.jobs.push(vm.job);
 					$location.url('/');
-					notifyService.success("The job was created.", "Success");
+					notifyService.success('The job was created.', 'Success');
 					return vm.job;
 				})
 				.catch(handleError);
@@ -36,7 +36,7 @@
 
 		function deleteJob(job){
 
-			var result = $window.confirm("Are you sure you wish to delete this job?");
+			var result = $window.confirm('Are you sure you wish to delete this job?');
 
 			if(result){
 				jobService
@@ -44,7 +44,7 @@
 					.then(function(response){
 						var index = vm.jobs.indexOf(job);
 						vm.jobs.splice(index, 1);
-						notifyService.success("The job was deleted.", "Success");
+						notifyService.success('The job was deleted.', 'Success');
 						return response;
 					})
 					.catch(handleError);
@@ -52,11 +52,11 @@
 		}
 
 		function isAllowedDestinations(){
-			if(!vm.job) return false;
+			if(!vm.job) {return false;}
 
-			if(!vm.job.type) return false;
+			if(!vm.job.type) {return false;}
 
-			if(vm.job.type == 'purge') return false;
+			if(vm.job.type === 'purge') {return false;}
 
 			return true;
 		}
@@ -91,7 +91,7 @@
 				.then(function(response){
 					vm.job = response;
 					$location.url('/');
-					notifyService.success("The job has been saved.", "Success");
+					notifyService.success('The job has been saved.', 'Success');
 					return response;
 				})
 				.catch(handleError);
@@ -104,7 +104,7 @@
 
 		function handleError(err){
 			console.log(err);
-			notifyService.error(err, "Oops!");
+			notifyService.error(err, 'Oops!');
 		}
 
 		// init
